@@ -1,29 +1,22 @@
 import type React from "react";
 
 import { getAssetUrl } from "../services/assets";
-import type { User } from "../services/users";
 import { Logo } from "./logo";
 import { Nav } from "./nav";
 
-const SITE_URL = "https://billet.alexprice.dev";
+const SITE_URL = "https://www.annettelynoneil.com";
 const SITE_DESCRIPTION =
-  "Full-stack TypeScript starter — designed to be built on by AI coding agents";
+  "For founders who've already sold the vision and now need the product to catch up.";
+
+const GA_MEASUREMENT_ID = process.env.GA_MEASUREMENT_ID;
 
 interface LayoutProps {
   title: string;
   name: string;
   children: React.ReactNode;
-  user?: User | null;
-  csrfToken?: string;
 }
 
-export function Layout({
-  title,
-  name,
-  children,
-  user,
-  csrfToken,
-}: LayoutProps) {
+export function Layout({ title, name, children }: LayoutProps) {
   return (
     <html lang="en" style={{ colorScheme: "dark" }}>
       <head>
@@ -43,6 +36,31 @@ export function Layout({
         <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={SITE_DESCRIPTION} />
         <meta name="twitter:image" content={`${SITE_URL}/og-image.png`} />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Rock+Salt&family=Special+Gothic+Expanded+One&display=swap"
+          rel="stylesheet"
+        />
+        <link rel="canonical" href={SITE_URL} />
+        <link rel="icon" href="/favicon.png" type="image/png" />
+        {GA_MEASUREMENT_ID ? (
+          <>
+            <script
+              async
+              src={`https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(GA_MEASUREMENT_ID)}`}
+            />
+            <script
+              dangerouslySetInnerHTML={{
+                __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config',${JSON.stringify(GA_MEASUREMENT_ID)});`,
+              }}
+            />
+          </>
+        ) : null}
         <link rel="stylesheet" href={getAssetUrl("/assets/main.css")} />
         <script
           type="importmap"
@@ -64,21 +82,17 @@ export function Layout({
         <header>
           <a href="/" className="logo">
             <Logo />
-            <span>Billet</span>
+            <span>Annette Lyn O&apos;Neil</span>
           </a>
-          <Nav page={name} user={user} csrfToken={csrfToken} />
+          <Nav />
         </header>
         <main>{children}</main>
-        <footer>
-          <a href="https://github.com/alexpricedev/Billet">GitHub</a>
+        <footer id="site-footer">
           <span>
-            Built by <a href="https://alexprice.dev">alexprice.dev</a>
+            © {new Date().getFullYear()} - 🧡 SYTECH | Sheffield - Site by{" "}
+            <a href="https://chptrs.tech">ထCHPTRS</a>
           </span>
         </footer>
-        <script
-          async
-          src="https://unpkg.com/lottie-web@5/build/player/lottie_light.min.js"
-        />
         <script type="module" src={getAssetUrl("/assets/main.js")} />
       </body>
     </html>

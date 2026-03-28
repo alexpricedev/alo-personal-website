@@ -1,46 +1,24 @@
-import type { User } from "../services/users";
-import { CsrfField } from "./csrf-field";
+import { CONTACT_MAILTO } from "@server/constants/contact";
 
-const navLinks = [
-  { href: "/stack", label: "Stack", name: "stack" },
-  { href: "/projects", label: "CRUD", name: "projects" },
-  { href: "/forms", label: "Forms", name: "forms" },
-];
+const sectionLinks = [
+  { href: "/#about", label: "About me" },
+  { href: "/#who-i-work-with", label: "Who I work with" },
+  { href: "/#track-record", label: "Track record" },
+  { href: "/#expertise", label: "Expertises" },
+  { href: "/#testimonials", label: "Testimonials" },
+] as const;
 
-interface NavProps {
-  page: string;
-  user?: User | null;
-  csrfToken?: string;
-}
-
-export const Nav = ({ page, user, csrfToken }: NavProps) => (
+export const Nav = () => (
   <nav data-component="nav" aria-label="Main navigation">
     <ul>
-      {navLinks.map(({ href, label, name }) => (
-        <li key={name}>
-          <a
-            href={href}
-            className={page === name ? "active" : undefined}
-            aria-current={page === name ? "page" : undefined}
-          >
-            {label}
-          </a>
+      {sectionLinks.map(({ href, label }) => (
+        <li key={href}>
+          <a href={href}>{label}</a>
         </li>
       ))}
     </ul>
-    <div className="nav-auth">
-      {user ? (
-        <form method="post" action="/auth/logout">
-          <CsrfField token={csrfToken ?? null} />
-          <button type="submit" className="btn-ghost">
-            Logout
-          </button>
-        </form>
-      ) : (
-        <a href="/login" className="btn-ghost">
-          Login
-        </a>
-      )}
-    </div>
+    <a className="nav-contact" href={CONTACT_MAILTO}>
+      Contact
+    </a>
   </nav>
 );

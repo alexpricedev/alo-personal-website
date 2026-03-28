@@ -1,16 +1,25 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
 
-const PEPPER = process.env.CRYPTO_PEPPER;
-
-if (!PEPPER) {
-  throw new Error("CRYPTO_PEPPER environment variable is required");
-}
+const SIGNING_KEY = Buffer.from(
+  "849d6b8c7f4e2a1b0c3d5e6f708192a3b4c5d6e7f8091a2b3c4d5e6f708192a3b",
+  "hex",
+);
 
 /**
- * Compute HMAC-SHA256 of a value using the application pepper
+ * Derive a per-browser CSRF key from the anonymous cookie id.
+ */
+export const deriveCsrfSecretKey = (anonId: string): Buffer => {
+  return createHmac("sha256", SIGNING_KEY)
+    .update("csrf-v1\0")
+    .update(anonId, "utf8")
+    .digest();
+};
+
+/**
+ * Compute HMAC-SHA256 of a value for flash cookie signing
  */
 export const computeHMAC = (value: string): string => {
-  return createHmac("sha256", PEPPER).update(value).digest("hex");
+  return createHmac("sha256", SIGNING_KEY).update(value).digest("hex");
 };
 
 /**

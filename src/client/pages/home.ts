@@ -1,41 +1,47 @@
-declare global {
-  interface Window {
-    lottie: {
-      loadAnimation(params: {
-        container: HTMLElement;
-        renderer: string;
-        loop: boolean;
-        autoplay: boolean;
-        path: string;
-      }): void;
-    };
-  }
-}
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Lenis from "lenis";
 
-function startAnimation(container: HTMLElement) {
-  window.lottie.loadAnimation({
-    container,
-    renderer: "svg",
-    loop: true,
-    autoplay: true,
-    path: "/cube.json",
-  });
-  container.style.opacity = "0.55";
-}
+gsap.registerPlugin(ScrollTrigger);
 
 export function init() {
-  const container = document.getElementById("hero-lottie");
-  if (!container) return;
+  const lenis = new Lenis({
+    duration: 1.15,
+    smoothWheel: true,
+  });
 
-  if (window.lottie) {
-    startAnimation(container);
-    return;
+  function raf(time: number) {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
   }
+  requestAnimationFrame(raf);
 
-  const script = document.querySelector<HTMLScriptElement>(
-    'script[src*="lottie"]',
-  );
-  if (script) {
-    script.addEventListener("load", () => startAnimation(container));
+  lenis.on("scroll", ScrollTrigger.update);
+
+  const hero = document.querySelector(".stack-slab--hero");
+  const left = document.querySelector(".hero-name-split-left");
+  const right = document.querySelector(".hero-name-split-right");
+
+  if (hero && left && right) {
+    gsap.to(left, {
+      ease: "none",
+      scrollTrigger: {
+        end: "bottom top",
+        scrub: 1,
+        start: "top top",
+        trigger: hero,
+      },
+      xPercent: -18,
+    });
+    gsap.to(right, {
+      ease: "none",
+      scrollTrigger: {
+        end: "bottom top",
+        scrub: 1,
+        start: "top top",
+        trigger: hero,
+      },
+      xPercent: 18,
+    });
   }
 }

@@ -1,13 +1,16 @@
 import type { BunRequest } from "bun";
-import { getSessionContext, requireAuth } from "../../middleware/auth";
 import { csrfProtection } from "../../middleware/csrf";
+import { getRequestContext } from "../../middleware/request-context";
+import {
+  getAnonIdFromRequest,
+  setAnonCookie,
+} from "../../services/anon-cookie";
 import { createCsrfToken } from "../../services/csrf";
 import {
   createProject,
   deleteProject,
   getProjects,
 } from "../../services/project";
-import { setSessionCookie } from "../../services/sessions";
 import type { ProjectsState } from "../../templates/projects";
 import { Projects } from "../../templates/projects";
 import { redirect, render } from "../../utils/response";
@@ -17,43 +20,27 @@ const { getFlash, setFlash } = stateHelpers<ProjectsState>();
 
 export const projects = {
   async index(req: BunRequest): Promise<Response> {
-    const ctx = await getSessionContext(req);
+    const ctx = getRequestContext(req);
     const projectList = await getProjects();
 
-    if (ctx.requiresSetCookie && ctx.sessionId) {
-      setSessionCookie(req, ctx.sessionId);
-    }
-
-    let navCsrfToken: string | undefined;
-    if (ctx.isAuthenticated && ctx.sessionId) {
-      navCsrfToken = await createCsrfToken(
-        ctx.sessionId,
-        "POST",
-        "/auth/logout",
-      );
+    if (ctx.requiresSetCookie) {
+      setAnonCookie(req, ctx.anonId);
     }
 
     const state = getFlash(req);
 
-    let createCsrfTokenValue: string | null = null;
+    const createCsrfTokenValue = createCsrfToken(
+      ctx.anonId,
+      "POST",
+      "/projects",
+    );
     const deleteCsrfTokens: Record<number, string> = {};
-
-    if (ctx.sessionId) {
-      createCsrfTokenValue = await createCsrfToken(
-        ctx.sessionId,
+    for (const project of projectList) {
+      deleteCsrfTokens[project.id] = createCsrfToken(
+        ctx.anonId,
         "POST",
-        "/projects",
+        `/projects/${project.id}/delete`,
       );
-    }
-
-    if (ctx.isAuthenticated && ctx.sessionId) {
-      for (const project of projectList) {
-        deleteCsrfTokens[project.id] = await createCsrfToken(
-          ctx.sessionId,
-          "POST",
-          `/projects/${project.id}/delete`,
-        );
-      }
     }
 
     return render(
@@ -61,18 +48,13 @@ export const projects = {
         createCsrfToken={createCsrfTokenValue}
         deleteCsrfTokens={deleteCsrfTokens}
         projects={projectList}
-        isAuthenticated={ctx.isAuthenticated}
         state={state}
-        user={ctx.user}
-        csrfToken={navCsrfToken}
       />,
     );
   },
 
   async create(req: BunRequest): Promise<Response> {
-    const ctx = await getSessionContext(req);
-
-    if (!ctx.sessionId) {
+    if (!getAnonIdFromRequest(req)) {
       return redirect("/projects");
     }
 
@@ -91,8 +73,7 @@ export const projects = {
       return redirect("/projects");
     }
 
-    const createdBy = ctx.user?.email ?? null;
-    await createProject(title.trim(), createdBy);
+    await createProject(title.trim());
     setFlash(req, { state: "submission-success" });
     return redirect("/projects");
   },
@@ -100,14 +81,13 @@ export const projects = {
   async destroy<T extends `${string}:id${string}`>(
     req: BunRequest<T>,
   ): Promise<Response> {
-    const authRedirect = await requireAuth(req);
-    if (authRedirect) {
-      return authRedirect;
+    if (!getAnonIdFromRequest(req)) {
+      return redirect("/projects");
     }
 
     const csrfResponse = await csrfProtection(req, {
       method: "POST",
-      path: req.url,
+      path: new URL(req.url).pathname,
     });
     if (csrfResponse) {
       return csrfResponse;

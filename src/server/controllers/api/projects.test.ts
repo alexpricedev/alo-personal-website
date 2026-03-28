@@ -45,7 +45,7 @@ describe("Projects API", () => {
       ];
       mockGetProjects.mockResolvedValue(mockProjects);
 
-      const request = createMockRequest("http://localhost:3000/api/projects");
+      const request = createMockRequest("http://localhost:3333/api/projects");
       const response = await projectsApi.index(request);
 
       expect(response.status).toBe(200);
@@ -64,7 +64,7 @@ describe("Projects API", () => {
       const mockProject = createMockProject({ id: 1, title: "Test Project" });
       mockGetProjectById.mockResolvedValue(mockProject);
 
-      const request = createMockRequest("http://localhost:3000/api/projects/1");
+      const request = createMockRequest("http://localhost:3333/api/projects/1");
       const response = await projectsApi.show(request);
 
       expect(response.status).toBe(200);
@@ -81,7 +81,7 @@ describe("Projects API", () => {
       mockGetProjectById.mockResolvedValue(null);
 
       const request = createMockRequest(
-        "http://localhost:3000/api/projects/999",
+        "http://localhost:3333/api/projects/999",
       );
       const response = await projectsApi.show(request);
 
@@ -93,7 +93,7 @@ describe("Projects API", () => {
 
     test("handles invalid ID parameter", async () => {
       const request = createMockRequest(
-        "http://localhost:3000/api/projects/invalid",
+        "http://localhost:3333/api/projects/invalid",
       );
       await projectsApi.show(request);
 
@@ -108,7 +108,7 @@ describe("Projects API", () => {
       mockCreateProject.mockResolvedValue(newProject);
 
       const request = createMockRequest(
-        "http://localhost:3000/api/projects",
+        "http://localhost:3333/api/projects",
         "POST",
         { title: "New Project" },
       );
@@ -121,7 +121,7 @@ describe("Projects API", () => {
 
       const data = await response.json();
       expect(data).toEqual(newProject);
-      expect(mockCreateProject).toHaveBeenCalledWith("New Project", null);
+      expect(mockCreateProject).toHaveBeenCalledWith("New Project");
     });
   });
 
@@ -134,7 +134,7 @@ describe("Projects API", () => {
       mockUpdateProject.mockResolvedValue(updatedProject);
 
       const request = createMockRequest(
-        "http://localhost:3000/api/projects/1",
+        "http://localhost:3333/api/projects/1",
         "PUT",
         { title: "Updated Project" },
       );
@@ -154,7 +154,7 @@ describe("Projects API", () => {
       mockUpdateProject.mockResolvedValue(null);
 
       const request = createMockRequest(
-        "http://localhost:3000/api/projects/999",
+        "http://localhost:3333/api/projects/999",
         "PUT",
         { title: "Updated Project" },
       );
@@ -172,7 +172,7 @@ describe("Projects API", () => {
       mockDeleteProject.mockResolvedValue(true);
 
       const request = createMockRequest(
-        "http://localhost:3000/api/projects/1",
+        "http://localhost:3333/api/projects/1",
         "DELETE",
       );
       const response = await projectsApi.destroy(request);
@@ -187,7 +187,7 @@ describe("Projects API", () => {
       mockDeleteProject.mockResolvedValue(false);
 
       const request = createMockRequest(
-        "http://localhost:3000/api/projects/999",
+        "http://localhost:3333/api/projects/999",
         "DELETE",
       );
       const response = await projectsApi.destroy(request);

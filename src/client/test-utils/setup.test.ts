@@ -8,6 +8,6 @@ describe("happy-dom prelude", () => {
 
   test("window is available globally", () => {
     expect(window).toBeDefined();
-    expect(window.location.href).toBe("http://localhost:3000/");
+    expect(window.location.href).toBe("http://localhost:3333/");
   });
 });

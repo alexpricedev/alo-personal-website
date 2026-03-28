@@ -2,95 +2,37 @@
 
 ## CSRF Protection
 
-Billet implements robust Cross-Site Request Forgery (CSRF) protection using the **synchronizer token pattern**.
+CSRF uses HMAC tokens bound to HTTP method and path, derived from an HttpOnly `anon_id` cookie and an in-process signing key (see `src/server/utils/crypto.ts`). Mutating requests require `Origin` or `Referer` to match the request URL’s origin (or a caller-supplied `expectedOrigin` in middleware options).
 
-### Key Features
-- **Per-session secrets** with HMAC-SHA256 tokens bound to method + path
-- **Origin/Referer validation** and SameSite cookies for defense in depth
-- **Rate limiting** on failed attempts (10 per minute per session)
-- **Timing-safe comparison** to prevent timing attacks
+### Key features
+
+- **Origin/Referer validation** on mutating requests
+- **Rate limiting** on failed CSRF verification attempts (per anonymous id)
+- **Timing-safe comparison** of token material
 
 ### Usage
 
-#### 1. Controller Setup
+Generate a token where you render a form (same `anon_id` as the browser will send on POST):
+
 ```typescript
-import { getAuthContext, requireAuth } from "../../middleware/auth";
-import { getSessionIdFromCookies } from "../../services/auth";
+import { getRequestContext } from "../../middleware/request-context";
+import { setAnonCookie } from "../../services/anon-cookie";
 import { createCsrfToken } from "../../services/csrf";
+
+const ctx = getRequestContext(req);
+if (ctx.requiresSetCookie) setAnonCookie(req, ctx.anonId);
+const token = createCsrfToken(ctx.anonId, "POST", "/your-path");
+```
+
+Validate on POST:
+
+```typescript
 import { csrfProtection } from "../../middleware/csrf";
 
-// GET handler - generate token for forms
-async index(req: Request): Promise<Response> {
-  const auth = await getAuthContext(req);
-  let csrfToken: string | null = null;
-  
-  if (auth.isAuthenticated) {
-    const sessionId = getSessionIdFromCookies(req.headers.get("cookie"));
-    if (sessionId) {
-      csrfToken = await createCsrfToken(sessionId, "POST", "/examples");
-    }
-  }
-  
-  return render(<MyTemplate csrfToken={csrfToken} isAuthenticated={auth.isAuthenticated} />);
-}
-
-// POST handler - validate token
-async create(req: Request): Promise<Response> {
-  const authRedirect = await requireAuth(req);
-  if (authRedirect) return authRedirect;
-
-  const csrfResponse = await csrfProtection(req, {
-    method: "POST",
-    path: "/examples",
-  });
-  if (csrfResponse) return csrfResponse;
-
-  // Process request...
-}
+const blocked = await csrfProtection(req, { method: "POST", path: "/your-path" });
+if (blocked) return blocked;
 ```
 
-#### 2. Template with CsrfField Component
-```tsx
-import { CsrfField } from "../components/csrf-field";
+## Environment
 
-{isAuthenticated ? (
-  <form method="POST" action="/examples">
-    <CsrfField token={csrfToken} />
-    <input type="text" name="data" />
-    <button type="submit">Submit</button>
-  </form>
-) : (
-  <p>Please <a href="/login">log in</a> to access this feature.</p>
-)}
-```
-
-#### 3. AJAX Requests
-```javascript
-// Include token in X-CSRF-Token header
-const csrfToken = document.querySelector('[name="_csrf"]')?.value;
-
-fetch('/api/examples', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-    'X-CSRF-Token': csrfToken,
-  },
-  body: JSON.stringify({ name: 'Example' }),
-});
-```
-
-### Protected Methods
-CSRF protection applies to: POST, PUT, PATCH, DELETE
-
-### What It Prevents
-- ✅ Cross-site form submissions from malicious sites
-- ✅ Cross-site AJAX requests without proper tokens  
-- ✅ Token reuse across sessions, methods, or paths
-- ✅ Replay attacks (time-bounded tokens)
-- ✅ Timing attacks (constant-time comparison)
-
-## Additional Security
-
-- **Session Management**: HMAC-protected IDs, secure cookies, 30-day expiration
-- **Input Validation**: Type-safe forms, parameterized queries, XSS prevention
-- **Environment Security**: Crypto pepper, environment isolation, no secret logging
+CSRF and flash signing do not use configurable secrets — no auth-related environment variables are required for those features.

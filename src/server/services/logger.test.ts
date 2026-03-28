@@ -25,9 +25,9 @@ describe("log", () => {
   });
 
   test("info writes to stdout with formatted prefix", () => {
-    log.info("server", "Listening on :3000");
+    log.info("server", "Listening on :3333");
     expect(logCalls).toHaveLength(1);
-    expect(logCalls[0]).toBe("[INFO] [server] Listening on :3000");
+    expect(logCalls[0]).toBe("[INFO] [server] Listening on :3333");
   });
 
   test("warn writes to stderr with formatted prefix", () => {
@@ -37,8 +37,8 @@ describe("log", () => {
   });
 
   test("error writes to stderr with formatted prefix", () => {
-    log.error("database", "Connection failed");
+    log.error("storage", "Write failed");
     expect(errorCalls).toHaveLength(1);
-    expect(errorCalls[0]).toBe("[ERROR] [database] Connection failed");
+    expect(errorCalls[0]).toBe("[ERROR] [storage] Write failed");
   });
 });

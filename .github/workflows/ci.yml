@@ -30,30 +30,8 @@ jobs:
     name: Tests
     needs: build
     runs-on: ubuntu-latest
-    services:
-      postgres:
-        image: postgres:16
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: san-jose-test
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
     env:
-      DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/san-jose-test
-      CRYPTO_PEPPER: test-pepper-do-not-use-in-production
-      PORT: "3000"
-      APP_NAME: San Jose
-      APP_URL: http://localhost:3000
-      APP_ORIGIN: ""
-      EMAIL_PROVIDER: console
-      FROM_EMAIL: test@example.com
-      FROM_NAME: Test
+      PORT: "3333"
       NODE_ENV: test
     steps:
       - uses: actions/checkout@v5

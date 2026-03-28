@@ -4,7 +4,7 @@ This file contains essential context and guidelines for Claude instances working
 
 **Key workflow reminders:**
 
-- Never try to run the local dev server. The Human is always running it in another tab on port 3000.
+- Never try to run the local dev server. The Human is always running it in another tab on port 3333.
 - Always test your work with BrowserMCP to confirm it works as expected.
 - This project uses JSX for it's template engine but it is NOT a React (client) project.
 - When trying different approaches for a given problem, always go back and remove or refactor.
@@ -42,7 +42,7 @@ Shadow DOM and custom element lifecycles can't be tested without browser-level i
 
 ### Testing Strategies by Module Type
 
-ALWAYS run test suites via the `package.json` *test scripts* so the env vars are correct.
+ALWAYS run test suites via the `package.json` *test scripts* so test setup (e.g. happy-dom preload) is applied correctly.
 NEVER try to roll your own lint or test commands.
 
 **API Controllers** (`src/server/controllers/api/*.test.ts`):
@@ -57,9 +57,7 @@ NEVER try to roll your own lint or test commands.
 - Test redirect responses with actual status codes and Location headers
 
 **Services** (`src/server/services/*.test.ts`):
-- Use real PostgreSQL database for testing with .env.test configuration
-- Test complete CRUD operations with actual SQL queries
-- Use table truncation and cleanup for test isolation
+- Test against the real in-memory implementations (e.g. `project.ts`); call `resetProjectStoreForTests()` or `cleanupTestData()` in `beforeEach` for isolation
 
 **Test Utilities** (`src/server/test-utils/*.ts`):
 - Unit test adapters and helper functions directly
@@ -77,7 +75,7 @@ NEVER try to roll your own lint or test commands.
 ### Best Practices
 
 - **Test user interactions**: Focus on user behavior rather than implementation
-- **Authenticated contexts**: Test components with guest and logged-in users
+- **CSRF / cookie contexts**: Exercise flows with the `anon_id` cookie where relevant
 - **Error scenarios**: Test error handling and edge cases
 
 ## Architecture Patterns
@@ -91,15 +89,13 @@ NEVER try to roll your own lint or test commands.
 
 ### Server Startup
 
-- Migrations run automatically on startup (`await runMigrations()` before `Bun.serve()`)
-- If a migration fails, the server won't start (fail-safe)
-- No need to run migrations manually before starting the server
+- `main.ts` seeds starter in-memory data before `Bun.serve()` (listens on `PORT` or **3333** by default)
 
 ### Logging
 
 - Use `log.info(category, message)`, `log.warn(...)`, `log.error(...)` from `src/server/services/logger.ts`
 - Never use `console.*` directly in server code — Biome enforces `noConsole: error`
-- CLI scripts (`cli.ts`, `bootstrap.ts`) and test files are exempt from this rule
+- CLI scripts and test files are exempt from this rule
 - Output format: `[LEVEL] [category] message` — goes to stdout/stderr for platform capture
 
 ### Service Layer Abstraction
@@ -159,16 +155,12 @@ src/
 │   │   └── api.ts                 # API route map
 │   ├── controllers/               # Route handlers (grouped by domain)
 │   │   ├── app/                   # View controllers — return HTML
-│   │   ├── api/                   # API controllers — return JSON
-│   │   └── auth/                  # Auth controllers — login/logout flows
+│   │   └── api/                   # API controllers — return JSON
 │   ├── templates/                 # Full-page JSX templates
 │   ├── components/                # Reusable server JSX components
 │   ├── services/                  # Business logic & data access
-│   ├── middleware/                # HTTP middleware (auth, CSRF)
+│   ├── middleware/                # HTTP middleware (CSRF, etc.)
 │   ├── utils/                     # Shared utilities (response, crypto, etc.)
-│   ├── database/
-│   │   ├── cli.ts / migrate.ts    # Migration tooling
-│   │   └── migrations/            # Numbered migration files
 │   └── test-utils/                # Test infrastructure (setup, factories, helpers)
 │
 └── types/                         # Global TypeScript type declarations
@@ -180,10 +172,9 @@ src/
 |------|-----------|---------|
 | Files & directories | kebab-case | `route-handler.ts`, `test-utils/` |
 | JSX component exports | PascalCase | `Home`, `Layout`, `CsrfField` |
-| Controller namespace exports | camelCase | `home`, `examplesApi`, `login` |
+| Controller namespace exports | camelCase | `home`, `examplesApi` |
 | Service functions | camelCase | `getExamples`, `createCsrfToken` |
 | Type exports | PascalCase | `Example`, `VisitorStats`, `AuthContext` |
-| Migrations | `NNN_snake_case.ts` | `001_initial_setup.ts` |
 | Test files | Co-located `.test.ts` | `home.test.ts` next to `home.tsx` |
 
 **Controller barrel export naming:** App controllers export plain names (`home`, `about`). API controllers use an `Api` suffix (`examplesApi`, `statsApi`) to disambiguate when both domains share a resource name.

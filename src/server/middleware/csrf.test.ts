@@ -1,42 +1,13 @@
-import { afterAll, beforeEach, describe, expect, mock, test } from "bun:test";
-import { SQL } from "bun";
-import { findOrCreateUser } from "../services/auth";
+import { describe, expect, test } from "bun:test";
+import { ANON_COOKIE_NAME } from "../services/anon-cookie";
 import { createCsrfToken } from "../services/csrf";
-import { db } from "../services/database";
-import { createAuthenticatedSession } from "../services/sessions";
 import { createBunRequest } from "../test-utils/bun-request";
-import { cleanupTestData } from "../test-utils/helpers";
 import { csrfProtection } from "./csrf";
 
-if (!process.env.DATABASE_URL) {
-  throw new Error("DATABASE_URL is required for tests");
-}
-
-const ORIGIN = new URL(process.env.APP_URL as string).origin;
-const connection = new SQL(process.env.DATABASE_URL);
-
-mock.module("../services/database", () => ({
-  get db() {
-    return connection;
-  },
-}));
+const ORIGIN = "http://localhost:3333";
+const TEST_ANON = "550e8400-e29b-41d4-a716-446655440099";
 
 describe("CSRF Middleware", () => {
-  beforeEach(async () => {
-    await cleanupTestData(db);
-  });
-
-  afterAll(async () => {
-    await connection.end();
-    mock.restore();
-  });
-  const createTestSession = async (
-    email = `test-${Date.now()}-${Math.random()}@example.com`,
-  ) => {
-    const user = await findOrCreateUser(email);
-    return createAuthenticatedSession(user.id);
-  };
-
   describe("csrfProtection", () => {
     test("allows GET requests without token", async () => {
       const req = createBunRequest(`${ORIGIN}/test`, {
@@ -78,9 +49,7 @@ describe("CSRF Middleware", () => {
     });
 
     test("rejects POST request without Origin/Referer", async () => {
-      const sessionId = await createTestSession();
-      const cookieHeader = `session_id=${sessionId}`;
-
+      const cookieHeader = `${ANON_COOKIE_NAME}=${TEST_ANON}`;
       const req = createBunRequest(`${ORIGIN}/test`, {
         method: "POST",
         headers: {
@@ -98,7 +67,7 @@ describe("CSRF Middleware", () => {
       expect(await response?.text()).toBe("Invalid request origin");
     });
 
-    test("rejects POST request without session cookie", async () => {
+    test("rejects POST request without anon cookie", async () => {
       const req = createBunRequest(`${ORIGIN}/test`, {
         method: "POST",
         headers: {
@@ -117,9 +86,7 @@ describe("CSRF Middleware", () => {
     });
 
     test("rejects POST request without CSRF token", async () => {
-      const sessionId = await createTestSession();
-      const cookieHeader = `session_id=${sessionId}`;
-
+      const cookieHeader = `${ANON_COOKIE_NAME}=${TEST_ANON}`;
       const req = createBunRequest(`${ORIGIN}/test`, {
         method: "POST",
         headers: {
@@ -139,9 +106,8 @@ describe("CSRF Middleware", () => {
     });
 
     test("accepts POST request with valid CSRF token in header", async () => {
-      const sessionId = await createTestSession();
-      const cookieHeader = `session_id=${sessionId}`;
-      const csrfToken = await createCsrfToken(sessionId, "POST", "/test");
+      const cookieHeader = `${ANON_COOKIE_NAME}=${TEST_ANON}`;
+      const csrfToken = createCsrfToken(TEST_ANON, "POST", "/test");
 
       const req = createBunRequest(`${ORIGIN}/test`, {
         method: "POST",
@@ -161,9 +127,8 @@ describe("CSRF Middleware", () => {
     });
 
     test("accepts POST request with valid CSRF token in form data", async () => {
-      const sessionId = await createTestSession();
-      const cookieHeader = `session_id=${sessionId}`;
-      const csrfToken = await createCsrfToken(sessionId, "POST", "/test");
+      const cookieHeader = `${ANON_COOKIE_NAME}=${TEST_ANON}`;
+      const csrfToken = createCsrfToken(TEST_ANON, "POST", "/test");
 
       const formData = new FormData();
       formData.append("_csrf", csrfToken);
@@ -187,9 +152,7 @@ describe("CSRF Middleware", () => {
     });
 
     test("rejects POST request with invalid CSRF token", async () => {
-      const sessionId = await createTestSession();
-      const cookieHeader = `session_id=${sessionId}`;
-
+      const cookieHeader = `${ANON_COOKIE_NAME}=${TEST_ANON}`;
       const req = createBunRequest(`${ORIGIN}/test`, {
         method: "POST",
         headers: {
@@ -261,9 +224,8 @@ describe("CSRF Middleware", () => {
     });
 
     test("uses custom expected origin", async () => {
-      const sessionId = await createTestSession();
-      const cookieHeader = `session_id=${sessionId}`;
-      const csrfToken = await createCsrfToken(sessionId, "POST", "/test");
+      const cookieHeader = `${ANON_COOKIE_NAME}=${TEST_ANON}`;
+      const csrfToken = createCsrfToken(TEST_ANON, "POST", "/test");
 
       const req = createBunRequest(`${ORIGIN}/test`, {
         method: "POST",
@@ -284,9 +246,7 @@ describe("CSRF Middleware", () => {
     });
 
     test("detects method mismatch - returns 500 for configuration error", async () => {
-      const sessionId = await createTestSession();
-      const cookieHeader = `session_id=${sessionId}`;
-
+      const cookieHeader = `${ANON_COOKIE_NAME}=${TEST_ANON}`;
       const req = createBunRequest(`${ORIGIN}/test`, {
         method: "POST",
         headers: {
@@ -296,7 +256,7 @@ describe("CSRF Middleware", () => {
       });
 
       const response = await csrfProtection(req, {
-        method: "PUT", // Wrong method passed in options
+        method: "PUT",
         path: "/test",
       });
 
@@ -306,9 +266,8 @@ describe("CSRF Middleware", () => {
     });
 
     test("works without method in options - uses req.method", async () => {
-      const sessionId = await createTestSession();
-      const cookieHeader = `session_id=${sessionId}`;
-      const csrfToken = await createCsrfToken(sessionId, "POST", "/test");
+      const cookieHeader = `${ANON_COOKIE_NAME}=${TEST_ANON}`;
+      const csrfToken = createCsrfToken(TEST_ANON, "POST", "/test");
 
       const req = createBunRequest(`${ORIGIN}/test`, {
         method: "POST",
@@ -320,7 +279,6 @@ describe("CSRF Middleware", () => {
       });
 
       const response = await csrfProtection(req, {
-        // No method specified - should use req.method
         path: "/test",
       });
 
@@ -336,7 +294,7 @@ describe("CSRF Middleware", () => {
       });
 
       const response = await csrfProtection(req, {
-        method: "POST", // Wrong method - should return 500 for configuration error
+        method: "POST",
         path: "/test",
       });
 
@@ -346,11 +304,8 @@ describe("CSRF Middleware", () => {
     });
 
     test("uses actual request method for token verification", async () => {
-      const sessionId = await createTestSession();
-      const cookieHeader = `session_id=${sessionId}`;
-
-      // Create token with actual request method
-      const csrfToken = await createCsrfToken(sessionId, "PATCH", "/test");
+      const cookieHeader = `${ANON_COOKIE_NAME}=${TEST_ANON}`;
+      const csrfToken = createCsrfToken(TEST_ANON, "PATCH", "/test");
 
       const req = createBunRequest(`${ORIGIN}/test`, {
         method: "PATCH",
@@ -370,14 +325,11 @@ describe("CSRF Middleware", () => {
     });
 
     test("rejects token created for different method than actual request", async () => {
-      const sessionId = await createTestSession();
-      const cookieHeader = `session_id=${sessionId}`;
-
-      // Create token for PUT but make POST request
-      const csrfToken = await createCsrfToken(sessionId, "PUT", "/test");
+      const cookieHeader = `${ANON_COOKIE_NAME}=${TEST_ANON}`;
+      const csrfToken = createCsrfToken(TEST_ANON, "PUT", "/test");
 
       const req = createBunRequest(`${ORIGIN}/test`, {
-        method: "POST", // Different method than token was created for
+        method: "POST",
         headers: {
           Origin: ORIGIN,
           Cookie: cookieHeader,

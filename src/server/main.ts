@@ -1,23 +1,17 @@
-import { runMigrations } from "./database/migrate";
-import { seedIfEmpty } from "./database/seed";
-import { adminRoutes } from "./routes/admin";
 import { apiRoutes } from "./routes/api";
 import { appRoutes } from "./routes/app";
 import { handleAssetRequest, initAssets } from "./services/assets";
 import { log } from "./services/logger";
-import { validateEnv } from "./utils/env";
+import { seedStarterProjectsIfEmpty } from "./services/project";
 
-validateEnv();
-await runMigrations();
-await seedIfEmpty();
+seedStarterProjectsIfEmpty();
 await initAssets();
 
 const server = Bun.serve({
-  port: Number(process.env.PORT),
+  port: Number(process.env.PORT) || 3333,
   idleTimeout: 30,
   routes: {
     ...appRoutes,
-    ...adminRoutes,
     ...apiRoutes,
   },
   async fetch(req) {

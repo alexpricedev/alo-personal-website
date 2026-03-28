@@ -4,7 +4,6 @@ import { DataTable } from "../components/data-table";
 import { Flash } from "../components/flash";
 import { Layout } from "../components/layouts";
 import type { Project } from "../services/project";
-import type { User } from "../services/users";
 
 export interface ProjectsState {
   state?: "submission-success" | "deletion-success";
@@ -13,21 +12,13 @@ export interface ProjectsState {
 export type ProjectsProps = {
   projects: Project[];
   state: ProjectsState;
-  isAuthenticated: boolean;
   createCsrfToken: string | null;
   deleteCsrfTokens: Record<number, string>;
-  user: User | null;
-  csrfToken?: string;
 };
 
 export const Projects = (props: ProjectsProps): JSX.Element => {
   return (
-    <Layout
-      title="CRUD - Billet"
-      name="projects"
-      user={props.user}
-      csrfToken={props.csrfToken}
-    >
+    <Layout title="CRUD - Billet" name="projects">
       <h1>CRUD</h1>
       <p className="lead">
         Create, read, update, and delete with server-rendered forms, CSRF
@@ -66,13 +57,6 @@ export const Projects = (props: ProjectsProps): JSX.Element => {
           )}
         />
       </div>
-      {!props.isAuthenticated && (
-        <p className="text-tertiary">
-          <a href="/login">Log in</a> to delete projects — the delete column
-          only renders for authenticated users, showing how auth gates both
-          controller logic and template output.
-        </p>
-      )}
       {props.projects.length === 0 ? (
         <p className="text-tertiary">No projects yet.</p>
       ) : (
@@ -81,38 +65,27 @@ export const Projects = (props: ProjectsProps): JSX.Element => {
             <thead>
               <tr>
                 <th>Title</th>
-                <th>Created by</th>
-                {props.isAuthenticated && <th />}
+                <th />
               </tr>
             </thead>
             <tbody>
               {props.projects.map((project) => (
                 <tr key={project.id}>
                   <td>{project.title}</td>
-                  <td>
-                    {project.created_by
-                      ? project.created_by === props.user?.email
-                        ? "You"
-                        : "User"
-                      : "Guest"}
+                  <td className="delete-cell">
+                    {props.deleteCsrfTokens[project.id] ? (
+                      <form
+                        method="POST"
+                        action={`/projects/${project.id}/delete`}
+                        className="delete-form"
+                      >
+                        <CsrfField token={props.deleteCsrfTokens[project.id]} />
+                        <button type="submit" className="delete-btn">
+                          Delete
+                        </button>
+                      </form>
+                    ) : null}
                   </td>
-                  {props.isAuthenticated &&
-                    props.deleteCsrfTokens[project.id] && (
-                      <td className="delete-cell">
-                        <form
-                          method="POST"
-                          action={`/projects/${project.id}/delete`}
-                          className="delete-form"
-                        >
-                          <CsrfField
-                            token={props.deleteCsrfTokens[project.id]}
-                          />
-                          <button type="submit" className="delete-btn">
-                            Delete
-                          </button>
-                        </form>
-                      </td>
-                    )}
                 </tr>
               ))}
             </tbody>

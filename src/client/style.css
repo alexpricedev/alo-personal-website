@@ -3,8 +3,6 @@
 @import "./pages/stack.css";
 @import "./pages/forms.css";
 @import "./pages/projects.css";
-@import "./pages/login.css";
-@import "./pages/admin.css";
 
 /* Component styles */
 @import "./components/layout.css";
@@ -15,6 +13,24 @@
 @import "./components/badge.css";
 
 :root {
+  /* Brand palette — source: public/brand/palette-reference.png */
+  --brand-pink: #f2055c;
+  --brand-blue: #056cf2;
+  --brand-blue-sky: #0583f2;
+  --brand-light-blue: #e5f2fb;
+  --brand-navy: #022340;
+  --brand-yellow: #f2cb07;
+  --brand-monogram-gold: #c9a73d;
+  --brand-white: #ffffff;
+  --brand-black: #000000;
+
+  /*
+   * Brand typography — Montserrat (body), Special Gothic Expanded One + Rock Salt (Google Fonts).
+   */
+  --font-brand-display: "Special Gothic Expanded One", "Oswald", "Arial Narrow",
+    sans-serif;
+  --font-brand-accent: "Rock Salt", "Segoe Script", "Brush Script MT", cursive;
+
   --color-bg: #0a0a0b;
   --color-surface: #141415;
   --color-surface-hover: #1c1c1e;
@@ -28,8 +44,8 @@
   --color-success: #34d399;
   --color-danger: #f87171;
   --color-warning: #fbbf24;
-  --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
-    Arial, sans-serif;
+  --font-main: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, Helvetica, Arial, sans-serif;
   --font-mono: "SF Mono", "Fira Code", "Fira Mono", Menlo, monospace;
   --radius: 0.5rem;
   --shadow: none;

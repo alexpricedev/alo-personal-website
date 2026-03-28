@@ -3,12 +3,6 @@ import { afterEach, beforeEach, describe, expect, test } from "bun:test";
 describe("forms page init", () => {
   beforeEach(() => {
     document.body.innerHTML = `
-      <nav>
-        <form method="post" action="/auth/logout">
-          <input type="hidden" name="_csrf" value="token" />
-          <button type="submit">Logout</button>
-        </form>
-      </nav>
       <section class="card form-card">
         <form method="POST" action="/forms">
           <input type="hidden" name="_csrf" value="csrf-token" />

@@ -6,7 +6,6 @@ export const createMockProject = (
 ): Project => ({
   id: 1,
   title: "Test Project",
-  created_by: null,
   ...overrides,
 });
 

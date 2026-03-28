@@ -1,36 +1,20 @@
-import { afterAll, beforeEach, describe, expect, mock, test } from "bun:test";
-import { SQL } from "bun";
-import { cleanupTestData, seedTestData } from "../test-utils/helpers";
-
-if (!process.env.DATABASE_URL) {
-  throw new Error("DATABASE_URL is required for tests");
-}
-const connection = new SQL(process.env.DATABASE_URL);
-
-// Mock the database module before importing the service
-mock.module("./database", () => ({
-  get db() {
-    return connection;
-  },
-}));
-
-import { db } from "./database";
+import { afterEach, beforeEach, describe, expect, test } from "bun:test";
 import {
   createProject,
   deleteProject,
   getProjectById,
   getProjects,
+  resetProjectStoreForTests,
   updateProject,
 } from "./project";
 
-describe("Project Service with PostgreSQL", () => {
-  beforeEach(async () => {
-    await cleanupTestData(db);
+describe("Project service (in-memory)", () => {
+  beforeEach(() => {
+    resetProjectStoreForTests();
   });
 
-  afterAll(async () => {
-    await connection.end();
-    mock.restore();
+  afterEach(() => {
+    resetProjectStoreForTests();
   });
 
   describe("getProjects", () => {
@@ -40,7 +24,9 @@ describe("Project Service with PostgreSQL", () => {
     });
 
     test("returns all projects ordered by id", async () => {
-      await seedTestData(db);
+      await createProject("Test Project 1");
+      await createProject("Test Project 2");
+      await createProject("Test Project 3");
 
       const result = await getProjects();
       expect(result).toHaveLength(3);
@@ -51,29 +37,16 @@ describe("Project Service with PostgreSQL", () => {
       expect(result[0].id).toBeLessThan(result[1].id);
       expect(result[1].id).toBeLessThan(result[2].id);
     });
-
-    test("returns created_by values", async () => {
-      await seedTestData(db);
-
-      const result = await getProjects();
-      expect(result[0].created_by).toBe("alice@example.com");
-      expect(result[1].created_by).toBeNull();
-      expect(result[2].created_by).toBe("bob@example.com");
-    });
   });
 
   describe("getProjectById", () => {
     test("returns project when found", async () => {
-      await seedTestData(db);
-      const projects = await getProjects();
-      const firstId = projects[0].id;
-
-      const result = await getProjectById(firstId);
+      const created = await createProject("Test Project 1");
+      const result = await getProjectById(created.id);
 
       expect(result).not.toBeNull();
-      expect(result?.id).toBe(firstId);
+      expect(result?.id).toBe(created.id);
       expect(result?.title).toBe("Test Project 1");
-      expect(result?.created_by).toBe("alice@example.com");
     });
 
     test("returns null when project not found", async () => {
@@ -83,28 +56,13 @@ describe("Project Service with PostgreSQL", () => {
   });
 
   describe("createProject", () => {
-    test("creates new project with auto-increment id", async () => {
+    test("creates new project with incrementing id", async () => {
       const result = await createProject("New Test Project");
 
       expect(result.id).toBeDefined();
       expect(result.title).toBe("New Test Project");
-      expect(result.created_by).toBeNull();
       expect(typeof result.id).toBe("number");
       expect(result.id).toBeGreaterThan(0);
-    });
-
-    test("creates project with created_by", async () => {
-      const result = await createProject("Auth Project", "user@example.com");
-
-      expect(result.title).toBe("Auth Project");
-      expect(result.created_by).toBe("user@example.com");
-    });
-
-    test("creates project with null created_by for guests", async () => {
-      const result = await createProject("Guest Project", null);
-
-      expect(result.title).toBe("Guest Project");
-      expect(result.created_by).toBeNull();
     });
 
     test("creates multiple projects with different ids", async () => {
@@ -135,19 +93,12 @@ describe("Project Service with PostgreSQL", () => {
       expect(updated?.title).toBe("Updated Title");
     });
 
-    test("preserves created_by on update", async () => {
-      const created = await createProject("Original", "user@example.com");
-      const updated = await updateProject(created.id, "Updated");
-
-      expect(updated?.created_by).toBe("user@example.com");
-    });
-
     test("returns null when updating non-existent project", async () => {
       const result = await updateProject(9999, "Updated Title");
       expect(result).toBeNull();
     });
 
-    test("updated project persists in database", async () => {
+    test("updated project persists in store", async () => {
       const created = await createProject("Original");
       await updateProject(created.id, "Modified");
 
@@ -173,7 +124,9 @@ describe("Project Service with PostgreSQL", () => {
     });
 
     test("deleted project is removed from list", async () => {
-      await seedTestData(db);
+      await createProject("A");
+      await createProject("B");
+      await createProject("C");
       const projects = await getProjects();
       const initialCount = projects.length;
 

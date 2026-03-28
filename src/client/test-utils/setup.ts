@@ -13,7 +13,7 @@ const BunWritableStream = globalThis.WritableStream;
 const BunTransformStream = globalThis.TransformStream;
 
 GlobalRegistrator.register({
-  url: "http://localhost:3000",
+  url: "http://localhost:3333",
   width: 1920,
   height: 1080,
 });

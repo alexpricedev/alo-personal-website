@@ -1,14 +1,8 @@
 import { DataTable } from "@server/components/data-table";
 import { Layout } from "@server/components/layouts";
-import type { User } from "@server/services/users";
 
-interface StackProps {
-  user: User | null;
-  csrfToken?: string;
-}
-
-export const Stack = ({ user, csrfToken }: StackProps) => (
-  <Layout title="Stack - Billet" name="stack" user={user} csrfToken={csrfToken}>
+export const Stack = () => (
+  <Layout title="Stack - Billet" name="stack">
     <h1>The Stack</h1>
     <p className="lead">
       Billet is a server-rendered TypeScript starter built on Bun. Templates are
@@ -44,14 +38,12 @@ export const Stack = ({ user, csrfToken }: StackProps) => (
 │   ├── routes/              # URL → controller mapping
 │   ├── controllers/         # Request handlers
 │   │   ├── app/             # View controllers (HTML)
-│   │   ├── api/             # API controllers (JSON)
-│   │   └── auth/            # Auth flows
+│   │   └── api/             # API controllers (JSON)
 │   ├── templates/           # Full-page JSX templates
 │   ├── components/          # Reusable server JSX
 │   ├── services/            # Business logic & data
-│   ├── middleware/          # Auth, CSRF
+│   ├── middleware/          # CSRF
 │   ├── utils/               # Shared helpers
-│   └── database/            # Migrations
 │
 └── types/                   # Global type declarations`}</pre>
     </section>
@@ -116,10 +108,6 @@ export const Stack = ({ user, csrfToken }: StackProps) => (
           <tr>
             <td>Bun</td>
             <td>Runtime, bundler, test runner, and package manager</td>
-          </tr>
-          <tr>
-            <td>PostgreSQL</td>
-            <td>Primary data store with raw SQL via tagged templates</td>
           </tr>
           <tr>
             <td>Bun CSS bundler</td>

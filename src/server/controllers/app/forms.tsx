@@ -1,8 +1,11 @@
 import type { BunRequest } from "bun";
-import { getSessionContext } from "../../middleware/auth";
 import { csrfProtection } from "../../middleware/csrf";
+import { getRequestContext } from "../../middleware/request-context";
+import {
+  getAnonIdFromRequest,
+  setAnonCookie,
+} from "../../services/anon-cookie";
 import { createCsrfToken } from "../../services/csrf";
-import { setSessionCookie } from "../../services/sessions";
 import type { FormsState } from "../../templates/forms";
 import { Forms } from "../../templates/forms";
 import { redirect, render } from "../../utils/response";
@@ -11,43 +14,20 @@ import { stateHelpers } from "../../utils/state";
 const { getFlash, setFlash } = stateHelpers<FormsState>();
 
 export const forms = {
-  async index(req: BunRequest): Promise<Response> {
-    const ctx = await getSessionContext(req);
-
-    if (ctx.requiresSetCookie && ctx.sessionId) {
-      setSessionCookie(req, ctx.sessionId);
-    }
-
-    let navCsrfToken: string | undefined;
-    if (ctx.isAuthenticated && ctx.sessionId) {
-      navCsrfToken = await createCsrfToken(
-        ctx.sessionId,
-        "POST",
-        "/auth/logout",
-      );
+  index(req: BunRequest): Response {
+    const ctx = getRequestContext(req);
+    if (ctx.requiresSetCookie) {
+      setAnonCookie(req, ctx.anonId);
     }
 
     const state = getFlash(req);
+    const formCsrfToken = createCsrfToken(ctx.anonId, "POST", "/forms");
 
-    let formCsrfToken: string | null = null;
-    if (ctx.sessionId) {
-      formCsrfToken = await createCsrfToken(ctx.sessionId, "POST", "/forms");
-    }
-
-    return render(
-      <Forms
-        user={ctx.user}
-        csrfToken={navCsrfToken}
-        formCsrfToken={formCsrfToken}
-        state={state}
-      />,
-    );
+    return render(<Forms formCsrfToken={formCsrfToken} state={state} />);
   },
 
   async create(req: BunRequest): Promise<Response> {
-    const ctx = await getSessionContext(req);
-
-    if (!ctx.sessionId) {
+    if (!getAnonIdFromRequest(req)) {
       return redirect("/forms");
     }
 

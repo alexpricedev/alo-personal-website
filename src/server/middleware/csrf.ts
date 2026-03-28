@@ -1,4 +1,5 @@
 import type { BunRequest } from "bun";
+import { getAnonIdFromRequest } from "../services/anon-cookie";
 import {
   CSRF_FIELD_NAME,
   CSRF_HEADER_NAME,
@@ -6,7 +7,6 @@ import {
   verifyCsrfToken,
 } from "../services/csrf";
 import { log } from "../services/logger";
-import { getSessionIdFromRequest } from "../services/sessions";
 
 export interface CsrfOptions {
   method?: string; // Optional - used for validation if provided
@@ -45,9 +45,9 @@ export const csrfProtection = async (
     return new Response("Invalid request origin", { status: 403 });
   }
 
-  const sessionId = getSessionIdFromRequest(req);
+  const anonId = getAnonIdFromRequest(req);
 
-  if (!sessionId) {
+  if (!anonId) {
     return new Response("Invalid CSRF token", { status: 403 });
   }
 
@@ -84,8 +84,8 @@ export const csrfProtection = async (
   const normalizedPath = requestUrl.pathname;
 
   // Verify the CSRF token (use actual request method)
-  const isValid = await verifyCsrfToken(
-    sessionId,
+  const isValid = verifyCsrfToken(
+    anonId,
     actualMethod,
     normalizedPath,
     csrfToken,

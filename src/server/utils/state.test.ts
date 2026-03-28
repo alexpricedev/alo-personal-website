@@ -14,7 +14,7 @@ describe("State Helpers", () => {
   const helpers = stateHelpers<TestState>();
 
   test("sets and gets flash state", () => {
-    const req = createBunRequest("http://localhost:3000/test");
+    const req = createBunRequest("http://localhost:3333/test");
 
     helpers.setFlash(req, { success: true });
 
@@ -27,7 +27,7 @@ describe("State Helpers", () => {
   });
 
   test("deletes flash cookie after reading", () => {
-    const req = createBunRequest("http://localhost:3000/test");
+    const req = createBunRequest("http://localhost:3333/test");
 
     helpers.setFlash(req, { success: true });
 
@@ -46,14 +46,14 @@ describe("State Helpers", () => {
   });
 
   test("returns empty object for missing flash cookie", () => {
-    const req = createBunRequest("http://localhost:3000/test");
+    const req = createBunRequest("http://localhost:3333/test");
 
     const result = helpers.getFlash(req);
     expect(result).toEqual({});
   });
 
   test("rejects cookie with tampered signature", () => {
-    const req = createBunRequest("http://localhost:3000/test");
+    const req = createBunRequest("http://localhost:3333/test");
 
     helpers.setFlash(req, { success: true });
 
@@ -64,7 +64,7 @@ describe("State Helpers", () => {
       const parts = cookieValue.split(".");
       const tamperedValue = `badsignature.${parts.slice(1).join(".")}`;
 
-      const req2 = createBunRequest("http://localhost:3000/test", {
+      const req2 = createBunRequest("http://localhost:3333/test", {
         headers: {
           cookie: `flash_state=${tamperedValue}`,
         },
@@ -76,7 +76,7 @@ describe("State Helpers", () => {
   });
 
   test("sets correct cookie attributes", () => {
-    const req = createBunRequest("http://localhost:3000/test");
+    const req = createBunRequest("http://localhost:3333/test");
 
     helpers.setFlash(req, { success: true });
 
@@ -90,7 +90,7 @@ describe("State Helpers", () => {
   });
 
   test("handles complex state objects", () => {
-    const req = createBunRequest("http://localhost:3000/test");
+    const req = createBunRequest("http://localhost:3333/test");
 
     helpers.setFlash(req, { success: true, error: "Something failed" });
 

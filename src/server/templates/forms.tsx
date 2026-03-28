@@ -2,7 +2,6 @@ import { CsrfField } from "@server/components/csrf-field";
 import { Flash } from "@server/components/flash";
 import { FormField } from "@server/components/form-field";
 import { Layout } from "@server/components/layouts";
-import type { User } from "@server/services/users";
 
 export interface FormsState {
   state?: "submission-success";
@@ -12,19 +11,12 @@ export interface FormsState {
 }
 
 interface FormsProps {
-  user: User | null;
-  csrfToken?: string;
   formCsrfToken: string | null;
   state: FormsState;
 }
 
-export const Forms = ({
-  user,
-  csrfToken,
-  formCsrfToken,
-  state,
-}: FormsProps) => (
-  <Layout title="Forms - Billet" name="forms" user={user} csrfToken={csrfToken}>
+export const Forms = ({ formCsrfToken, state }: FormsProps) => (
+  <Layout title="Forms - Billet" name="forms">
     <h1>Form Patterns</h1>
     <p className="lead">
       Interactive forms with validation, CSRF protection, and flash messages
@@ -88,9 +80,9 @@ export const Forms = ({
               <h3>CSRF Protection</h3>
               <p className="text-tertiary">
                 Every mutating form includes a hidden <code>_csrf</code> token
-                generated per-session using the synchronizer token pattern.
-                Tokens are scoped to a specific HTTP method and path, then
-                verified server-side before the action executes.
+                derived from an HttpOnly <code>anon_id</code> cookie and
+                server-side signing. Tokens are scoped to a specific HTTP method
+                and path, then verified server-side before the action executes.
               </p>
             </div>
           </div>
