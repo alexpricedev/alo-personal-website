@@ -518,9 +518,11 @@
   }
 
   .stack-slab--contact {
+    aspect-ratio: 1024 / 545;
     background-color: var(--brand-navy);
     border-top: clamp(0.5rem, 1.5vw, 0.875rem) solid var(--brand-pink);
     isolation: isolate;
+    min-height: auto;
     overflow: hidden;
     position: relative;
   }
