@@ -21,12 +21,11 @@ describe("Home Controller", () => {
       expect(html).toContain(
         "For founders who&#x27;ve already sold the vision",
       );
-      expect(html).toContain("Track record");
-      expect(html).toContain("Story × Systems");
-      expect(html).toContain("Work with me");
+      expect(html).toContain('id="track-record"');
+      expect(html).toContain("How I think");
       expect(html).toContain("hello@annettelynoneil.com");
       expect(html).toContain('id="expertise"');
-      expect(html).toContain('id="testimonials"');
+      expect(html).toContain('id="contact"');
     });
   });
 });

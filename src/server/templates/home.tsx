@@ -11,18 +11,9 @@ export const Home = () => (
       >
         <div className="hero-layers" aria-hidden="true" />
         <div className="stack-slab__inner hero-inner">
-          <div className="hero-top">
-            <p className="hero-role">
-              <span className="hero-role__text">
-                Product Leader × Early-Stage Operational Design × Force
-                Multiplier
-              </span>
-            </p>
-          </div>
-
           <div className="hero-stage">
-            <div className="hero-name-group">
-              <div className="hero-name-split-left" aria-hidden="true">
+            <div className="hero-name-group" aria-hidden="true">
+              <div className="hero-name-split-left">
                 <span className="hero-name-line">
                   <span className="hero-name-accent">A</span>
                   <span className="hero-name-rest">NNETTE</span>
@@ -32,7 +23,7 @@ export const Home = () => (
                   <span className="hero-name-rest">YN</span>
                 </span>
               </div>
-              <div className="hero-name-split-right" aria-hidden="true">
+              <div className="hero-name-split-right">
                 <span className="hero-name-line">
                   <span className="hero-name-accent">O</span>
                   <span className="hero-name-rest">&apos;NEIL</span>
@@ -40,44 +31,46 @@ export const Home = () => (
               </div>
             </div>
             <h1 className="visually-hidden">Annette Lyn O&apos;Neil</h1>
-          </div>
-
-          <div className="hero-ledger">
-            <p className="hero-kicker">
-              For founders who&apos;ve already sold the vision and now need the
-              product to catch up.
+            <p className="hero-role">
+              <span className="hero-role__line">Product Leader</span>
+              <span className="hero-role__sep">×</span>
+              <span className="hero-role__line">
+                Early-Stage Operational Design
+              </span>
+              <span className="hero-role__sep">×</span>
+              <span className="hero-role__line">Force Multiplier</span>
             </p>
-            <div className="hero-sub-wrap">
-              <p className="hero-sub">
-                You raised the money. Now the real work starts. I work with
-                repeat founders to{" "}
-                <strong>turn fresh funding into validated product</strong> by
-                bringing an unusually effective blend of{" "}
-                <strong>product rigor</strong>, <strong>narrative skill</strong>{" "}
-                and <strong>muscular bias-to-action</strong>—especially in
-                moments where <strong>stakes</strong> and{" "}
-                <strong>ambiguity</strong> are both high.
-              </p>
-            </div>
-            <div className="hero-actions">
-              <a className="hero-cta" href={CONTACT_MAILTO}>
-                Work with me
-              </a>
-            </div>
           </div>
+        </div>
+      </section>
 
-          <p className="hero-scroll-hint">
-            <span className="hero-scroll-hint__line" aria-hidden="true" />
-            <span className="hero-scroll-hint__label">Scroll</span>
+      <section className="stack-slab stack-slab--pitch" id="pitch">
+        <div className="stack-slab__inner stack-slab__inner--wide">
+          <p className="hero-kicker reveal">
+            For founders who&apos;ve already sold the vision
+            <br />
+            <span className="hero-kicker__paren">
+              (and now need the product to catch up)
+            </span>
+          </p>
+          <p className="hero-sub reveal">
+            You raised the money. Now the real work starts. I work with repeat
+            founders to{" "}
+            <strong>turn fresh funding into validated product</strong> by
+            bringing an unusually effective blend of{" "}
+            <strong>product rigor</strong>, <strong>narrative skill</strong> and{" "}
+            <strong>muscular bias-to-action</strong>—especially in moments where{" "}
+            <strong>stakes</strong> and <strong>ambiguity</strong> are both
+            high.
           </p>
         </div>
       </section>
 
       <section className="stack-slab stack-slab--about" id="about">
         <div className="stack-slab__inner stack-slab__inner--wide">
-          <h2 className="slab-title slab-span-full">How I think</h2>
-          <div className="slab-two-col">
-            <div className="slab-col">
+          <div className="slab-two-col slab-two-col--about">
+            <div className="slab-col reveal">
+              <h2 className="slab-title">How I think</h2>
               <p className="pov-lead">
                 Founders are often strongest at selling the future before
                 they&apos;ve built the machine that can reach it. That&apos;s
@@ -92,10 +85,12 @@ export const Home = () => (
                 <em>not</em> looking for me.
               </blockquote>
             </div>
-            <div className="slab-col">
-              <h3 className="slab-subtitle slab-subtitle--flush">
-                Story × Systems
-              </h3>
+            <div className="slab-col reveal">
+              <blockquote className="pull-quote pull-quote--hero">
+                My work thrives when the feet leave the aircraft door: where{" "}
+                <strong>vision</strong> meets <strong>operating reality</strong>
+                .
+              </blockquote>
               <p className="text-secondary">
                 I learned story first. Then systems. Now I build products with
                 both. Before product, I ran complex productions with large
@@ -116,11 +111,6 @@ export const Home = () => (
                 <strong>more coordinated</strong>, and{" "}
                 <strong>more likely to succeed</strong> under pressure.
               </p>
-              <p className="pull-quote-inline">
-                My work thrives when the feet leave the aircraft door: where{" "}
-                <strong>vision</strong> meets <strong>operating reality</strong>
-                .
-              </p>
             </div>
           </div>
         </div>
@@ -131,174 +121,198 @@ export const Home = () => (
         id="who-i-work-with"
         aria-label="Who I work with"
       >
-        <div className="stack-slab__inner stack-slab__inner--wide who-i-work-with-inner">
-          <h2 className="slab-title slab-span-full">Who I work with</h2>
-          <p className="who-intro text-secondary">
-            I work with founders and early-stage teams who have real ambition
-            and real constraints.
-          </p>
-          <ul className="who-circles">
-            <li className="who-circle who-circle--pink who-circle--pos-1">
-              <p>
-                You&apos;ve raised and need to turn capital into disciplined
-                product progress
-              </p>
-            </li>
-            <li className="who-circle who-circle--blue who-circle--pos-2">
-              <p>
-                You&apos;ve shipped a V1 but traction is muddy and the next move
-                is unclear
-              </p>
-            </li>
-            <li className="who-circle who-circle--sky who-circle--pos-3">
-              <p>
-                You&apos;re approaching the next raise and need better PMF
-                signals, product logic, and operational credibility
-              </p>
-            </li>
-            <li className="who-circle who-circle--yellow who-circle--pos-4">
-              <p>
-                You&apos;re carrying too much operational debt and need someone
-                to impose structure without slowing the team down
-              </p>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <section className="stack-slab stack-slab--track" id="track-record">
-        <div className="stack-slab__inner stack-slab__inner--wide">
-          <h2 className="slab-title slab-span-full">Track record</h2>
-          <div className="proof-grid">
-            <article className="proof-block">
-              <header>
-                <h3 className="proof-role">Head of Product</h3>
-                <p className="proof-meta">Just · 2023–2025</p>
-              </header>
-              <p className="text-secondary">
-                Took an integration-heavy SaaS product from Alpha toward Beta
-                while building stronger product vision, roadmap discipline,
-                cross-functional collaboration, and user-centered feedback
-                systems.
-              </p>
-              <ul className="proof-outcomes">
-                <li>
-                  Defined and refined product vision and roadmap across user,
-                  client, and business needs
-                </li>
-                <li>
-                  Introduced data-informed decision-making through dashboards
-                  and visualisation
-                </li>
-                <li>
-                  Led collaborative specification, prototyping, and
-                  cross-functional product development
-                </li>
-              </ul>
-              <p className="proof-proves">
-                <strong>What this proves:</strong> I can build product clarity
-                and operating rhythm in an early-stage environment without
-                losing speed.
-              </p>
-            </article>
-
-            <article className="proof-block">
-              <header>
-                <h3 className="proof-role">
-                  Product Manager, Integrations / Product Audit Lead
-                </h3>
-                <p className="proof-meta">Ecologi · 2022–2023</p>
-              </header>
-              <p className="text-secondary">
-                Entered through a SaaS product audit and helped install stronger
-                product thinking, metrics, and organizational clarity.
-              </p>
-              <ul className="proof-outcomes">
-                <li>
-                  Introduced product principles and supported their
-                  operationalisation
-                </li>
-                <li>
-                  Built the organisation&apos;s first central product metrics
-                  dashboard
-                </li>
-                <li>
-                  Helped move internal confidence in product goals and success
-                  criteria from below 3/10 to 9+/10
-                </li>
-              </ul>
-              <p className="proof-proves">
-                <strong>What this proves:</strong> I can diagnose ambiguity,
-                create alignment, and materially raise confidence in the product
-                function.
-              </p>
-            </article>
-
-            <article className="proof-block">
-              <header>
-                <h3 className="proof-role">COO to CEO</h3>
-                <p className="proof-meta">Clearview · 2018–2023</p>
-              </header>
-              <p className="text-secondary">
-                Helped lead and scale the organisation through operational,
-                strategic, and leadership complexity.
-              </p>
-              <ul className="proof-outcomes">
-                <li>Grew headcount from 3 to approximately 50</li>
-                <li>
-                  Oversaw operations, investment logic, financial performance,
-                  and organisational growth
-                </li>
-                <li>
-                  Consulted on product best practices, leadership, UX, data, and
-                  content structure for early-stage clients
-                </li>
-              </ul>
-              <p className="proof-proves">
-                <strong>What this proves:</strong> I understand leadership and
-                growth considerably beyond the product silo.
-              </p>
-            </article>
-
-            <article className="proof-block">
-              <header>
-                <h3 className="proof-role">Producer / Logistician</h3>
-                <p className="proof-meta">
-                  Film &amp; Commercial Production · 2003–2020
-                </p>
-              </header>
-              <p className="text-secondary">
-                Led productions with budgets up to £6m across demanding,
-                multi-stakeholder environments.
-              </p>
-              <ul className="proof-outcomes">
-                <li>
-                  Managed budget, schedule, payroll, logistics, and
-                  cross-functional coordination under pressure
-                </li>
-                <li>
-                  Built bespoke bids for projects involving gravity sports
-                  content
-                </li>
-                <li>
-                  Developed calm, precise execution habits in high-stakes
-                  settings
-                </li>
-              </ul>
-              <p className="proof-proves">
-                <strong>What this proves:</strong> My product leadership is
-                built on an unusually thoroughgoing operational backbone.
-              </p>
-            </article>
+        <div className="who-header">
+          <div className="who-header__inner">
+            <h2 className="who-header__title reveal">Who I work with</h2>
+            <p className="who-header__lead reveal">
+              I work with founders and early-stage teams who have{" "}
+              <strong>real ambition</strong> and{" "}
+              <strong>real constraints</strong>.
+            </p>
           </div>
         </div>
+        <ul className="who-stripes">
+          <li className="who-stripe who-stripe--pink reveal-left">
+            <p>
+              You&apos;ve raised and need to turn capital into disciplined
+              product progress
+            </p>
+          </li>
+          <li className="who-stripe who-stripe--blue reveal-right">
+            <p>
+              You&apos;ve shipped a V1 but traction is muddy and the next move
+              is unclear
+            </p>
+          </li>
+          <li className="who-stripe who-stripe--teal reveal-left">
+            <p>
+              You&apos;re approaching the next raise and need better PMF
+              signals, product logic, and operational credibility
+            </p>
+          </li>
+          <li className="who-stripe who-stripe--yellow reveal-right">
+            <p>
+              You&apos;re carrying too much operational debt and need someone to
+              impose structure without slowing the team down
+            </p>
+          </li>
+        </ul>
       </section>
+
+      <div className="track-slides" id="track-record">
+        <section className="track-slide track-slide--dark">
+          <div className="track-slide__inner">
+            <div className="track-slide__content">
+              <h3 className="track-slide__role reveal-left">
+                Head of
+                <br />
+                Product
+              </h3>
+              <div className="track-slide__detail reveal-right">
+                <p className="track-slide__company">Just</p>
+                <ul className="track-slide__outcomes">
+                  <li>
+                    Defined and refined product vision and roadmap across user,
+                    client, and business needs
+                  </li>
+                  <li>
+                    Introduced data-informed decision-making through dashboards
+                    and visualisation
+                  </li>
+                  <li>
+                    Led collaborative specification, prototyping, and
+                    cross-functional product development
+                  </li>
+                </ul>
+                <p className="track-slide__proves">
+                  I can build product clarity and operating rhythm in an
+                  early-stage environment without losing speed.
+                </p>
+              </div>
+            </div>
+            <footer className="track-slide__timeline">
+              <span>Sheffield / 2023–2025</span>
+              <span className="track-slide__timeline-bar" aria-hidden="true" />
+            </footer>
+          </div>
+        </section>
+
+        <section className="track-slide track-slide--light">
+          <div className="track-slide__inner">
+            <div className="track-slide__content">
+              <h3 className="track-slide__role reveal-left">
+                Product
+                <br />
+                Lead
+              </h3>
+              <div className="track-slide__detail reveal-right">
+                <p className="track-slide__company">Ecologi</p>
+                <ul className="track-slide__outcomes">
+                  <li>
+                    Introduced product principles and supported their
+                    operationalisation
+                  </li>
+                  <li>
+                    Built the organisation&apos;s first central product metrics
+                    dashboard
+                  </li>
+                  <li>
+                    Moved internal confidence in product goals from below 3/10
+                    to 9+/10
+                  </li>
+                </ul>
+                <p className="track-slide__proves">
+                  I can diagnose ambiguity, create alignment, and materially
+                  raise confidence in the product function.
+                </p>
+              </div>
+            </div>
+            <footer className="track-slide__timeline">
+              <span>Bristol / 2022–2023</span>
+              <span className="track-slide__timeline-bar" aria-hidden="true" />
+            </footer>
+          </div>
+        </section>
+
+        <section className="track-slide track-slide--dark">
+          <div className="track-slide__inner">
+            <div className="track-slide__content">
+              <h3 className="track-slide__role reveal-left">
+                COO to
+                <br />
+                CEO
+              </h3>
+              <div className="track-slide__detail reveal-right">
+                <p className="track-slide__company">Clearview</p>
+                <ul className="track-slide__outcomes">
+                  <li>Grew headcount from 3 to approximately 50</li>
+                  <li>
+                    Oversaw operations, investment logic, financial performance,
+                    and organisational growth
+                  </li>
+                  <li>
+                    Consulted on product best practices, leadership, UX, data,
+                    and content structure for early-stage clients
+                  </li>
+                </ul>
+                <p className="track-slide__proves">
+                  I understand leadership and growth considerably beyond the
+                  product silo.
+                </p>
+              </div>
+            </div>
+            <footer className="track-slide__timeline">
+              <span>Sheffield / 2018–2023 (5 years)</span>
+              <span className="track-slide__timeline-bar" aria-hidden="true" />
+            </footer>
+          </div>
+        </section>
+
+        <section className="track-slide track-slide--light">
+          <div className="track-slide__inner">
+            <div className="track-slide__content">
+              <h3 className="track-slide__role reveal-left">
+                Producer /
+                <br />
+                Logistician
+              </h3>
+              <div className="track-slide__detail reveal-right">
+                <p className="track-slide__company">
+                  Film &amp; Commercial Production
+                </p>
+                <ul className="track-slide__outcomes">
+                  <li>
+                    Managed budget, schedule, payroll, logistics, and
+                    cross-functional coordination under pressure
+                  </li>
+                  <li>
+                    Built bespoke bids for projects involving gravity sports
+                    content
+                  </li>
+                  <li>
+                    Developed calm, precise execution habits in high-stakes
+                    settings
+                  </li>
+                </ul>
+                <p className="track-slide__proves">
+                  My product leadership is built on an unusually thoroughgoing
+                  operational backbone.
+                </p>
+              </div>
+            </div>
+            <footer className="track-slide__timeline">
+              <span>UK &amp; International / 2003–2020 (17 years)</span>
+              <span className="track-slide__timeline-bar" aria-hidden="true" />
+            </footer>
+          </div>
+        </section>
+      </div>
 
       <section className="stack-slab stack-slab--expertise" id="expertise">
         <div className="stack-slab__inner stack-slab__inner--wide">
-          <h2 className="slab-title slab-span-full">What I do</h2>
+          <h2 className="slab-title slab-span-full reveal">What I do</h2>
           <div className="slab-two-col slab-two-col--expertise">
-            <div className="slab-col">
+            <div className="slab-col reveal">
               <p className="expertise-lead text-secondary">
                 I help developing teams become more than the sum of their
                 operational parts.
@@ -326,7 +340,7 @@ export const Home = () => (
                 I don&apos;t just add hands. I add leverage.
               </blockquote>
             </div>
-            <div className="slab-col">
+            <div className="slab-col reveal">
               <h3 className="slab-subtitle slab-subtitle--flush">Expertise</h3>
               <div className="expertise-grid">
                 <div className="expertise-cluster">
@@ -373,35 +387,63 @@ export const Home = () => (
             </div>
           </div>
         </div>
-      </section>
-
-      <section
-        className="stack-slab stack-slab--testimonials"
-        id="testimonials"
-        aria-label="Testimonials"
-      >
-        <div className="stack-slab__inner stack-slab__inner--wide">
-          <div className="slab-two-col slab-two-col--testimonials">
-            <div className="slab-col">
-              <h2 className="slab-title">Testimonials</h2>
-              <p className="text-secondary testimonial-placeholder">
-                Placeholder — selected quotes and headshots coming soon.
-              </p>
-            </div>
-            <div className="slab-col">
-              <div className="testimonial-grid" aria-hidden="true">
-                <div className="testimonial-slot" />
-                <div className="testimonial-slot" />
-                <div className="testimonial-slot" />
-              </div>
-            </div>
+        <div className="expertise-ticker" aria-hidden="true">
+          <div className="expertise-ticker__track">
+            <span>Strategy</span>
+            <span className="expertise-ticker__sep">×</span>
+            <span>Roadmapping</span>
+            <span className="expertise-ticker__sep">×</span>
+            <span>Product Discovery</span>
+            <span className="expertise-ticker__sep">×</span>
+            <span>Prioritisation</span>
+            <span className="expertise-ticker__sep">×</span>
+            <span>Metrics</span>
+            <span className="expertise-ticker__sep">×</span>
+            <span>Feedback Loops</span>
+            <span className="expertise-ticker__sep">×</span>
+            <span>Founder Advisory</span>
+            <span className="expertise-ticker__sep">×</span>
+            <span>Product Audits</span>
+            <span className="expertise-ticker__sep">×</span>
+            <span>Information Architecture</span>
+            <span className="expertise-ticker__sep">×</span>
+            <span>PMF Signals</span>
+            <span className="expertise-ticker__sep">×</span>
+            <span>Team Alignment</span>
+            <span className="expertise-ticker__sep">×</span>
+            <span>Decision Communication</span>
+            <span className="expertise-ticker__sep">×</span>
+            <span>Strategy</span>
+            <span className="expertise-ticker__sep">×</span>
+            <span>Roadmapping</span>
+            <span className="expertise-ticker__sep">×</span>
+            <span>Product Discovery</span>
+            <span className="expertise-ticker__sep">×</span>
+            <span>Prioritisation</span>
+            <span className="expertise-ticker__sep">×</span>
+            <span>Metrics</span>
+            <span className="expertise-ticker__sep">×</span>
+            <span>Feedback Loops</span>
+            <span className="expertise-ticker__sep">×</span>
+            <span>Founder Advisory</span>
+            <span className="expertise-ticker__sep">×</span>
+            <span>Product Audits</span>
+            <span className="expertise-ticker__sep">×</span>
+            <span>Information Architecture</span>
+            <span className="expertise-ticker__sep">×</span>
+            <span>PMF Signals</span>
+            <span className="expertise-ticker__sep">×</span>
+            <span>Team Alignment</span>
+            <span className="expertise-ticker__sep">×</span>
+            <span>Decision Communication</span>
+            <span className="expertise-ticker__sep">×</span>
           </div>
         </div>
       </section>
 
       <section className="stack-slab stack-slab--contact" id="contact">
         <div className="stack-slab__inner stack-slab__inner--wide contact-inner">
-          <div className="contact-panel">
+          <div className="contact-panel reveal">
             <h2 className="slab-title slab-title--contact">Let&apos;s talk</h2>
             <p className="contact-lead text-secondary">
               If you&apos;re building in the messy, risk-rich middle between
