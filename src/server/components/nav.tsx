@@ -5,7 +5,6 @@ const sectionLinks = [
   { href: "/#who-i-work-with", label: "Who I work with" },
   { href: "/#track-record", label: "Track record" },
   { href: "/#expertise", label: "Expertises" },
-  { href: "/#testimonials", label: "Testimonials" },
 ] as const;
 
 export const Nav = () => (
