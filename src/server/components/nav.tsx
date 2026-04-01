@@ -1,5 +1,3 @@
-import { CONTACT_MAILTO } from "@server/constants/contact";
-
 const sectionLinks = [
   { href: "/#about", label: "About me" },
   { href: "/#who-i-work-with", label: "Who I work with" },
@@ -16,7 +14,7 @@ export const Nav = () => (
         </li>
       ))}
     </ul>
-    <a className="nav-contact" href={CONTACT_MAILTO}>
+    <a className="nav-contact" href="/#contact">
       Contact
     </a>
   </nav>
