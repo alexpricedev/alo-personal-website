@@ -525,6 +525,10 @@
     min-height: auto;
     overflow: hidden;
     position: relative;
+
+    @media (width <= 640px) {
+      aspect-ratio: auto;
+    }
   }
 
   .stack-slab--contact::after {
