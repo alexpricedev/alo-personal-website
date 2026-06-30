@@ -487,6 +487,11 @@
     padding: 2rem 0;
     text-transform: uppercase;
     white-space: nowrap;
+
+    @media (width <= 640px) {
+      flex-wrap: wrap;
+      white-space: normal;
+    }
   }
 
   .track-slide--dark .track-slide__timeline {
@@ -502,6 +507,11 @@
     flex: 1;
     height: 1px;
     opacity: 0.5;
+
+    @media (width <= 640px) {
+      flex-basis: 100%;
+      order: 2;
+    }
   }
 
   /* ── Expertise ─ */
