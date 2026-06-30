@@ -49,6 +49,7 @@ html {
   box-sizing: border-box;
   color: var(--color-text);
   font-size: 16px;
+  overflow-x: clip;
 }
 
 *,
@@ -64,6 +65,7 @@ body {
   background: var(--color-bg);
   color: var(--color-text);
   line-height: 1.6;
+  overflow-x: clip;
 }
 
 h1,
