@@ -48,6 +48,8 @@ export function Layout({ title, name, children }: LayoutProps) {
         />
         <link rel="canonical" href={SITE_URL} />
         <link rel="icon" href="/favicon.png" type="image/png" />
+        <link rel="apple-touch-icon" href="/favicon.png" />
+        <meta name="apple-mobile-web-app-title" content="ALO" />
         {GA_MEASUREMENT_ID ? (
           <>
             <script

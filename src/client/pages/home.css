@@ -422,6 +422,14 @@
     color: var(--brand-navy);
   }
 
+  /* Long single-word roles (e.g. "Logistician") must not crop on phones. */
+  @media (width <= 640px) {
+    .track-slide__role {
+      font-size: clamp(1.55rem, 7.5vw, 2.5rem);
+      letter-spacing: 0.01em;
+    }
+  }
+
   .track-slide__detail {
     padding-top: clamp(0.5rem, 2vw, 1.5rem);
   }
@@ -774,23 +782,60 @@
     margin: 0 0 1rem;
   }
 
-  .expertise-actions {
+  /* ── What I do: full-bleed colour bars (mirrors "Who I work with") ─ */
+
+  .expertise-intro {
+    padding-bottom: clamp(1.5rem, 4vw, 2.25rem);
+  }
+
+  .expertise-detail {
+    padding-top: clamp(2rem, 5vw, 3rem);
+  }
+
+  .action-stripes {
     list-style: none;
-    margin: 0 0 0.5rem;
+    margin: 0;
     padding: 0;
   }
 
-  .expertise-actions li {
-    margin-bottom: 0.5rem;
-    padding-left: 1rem;
-    position: relative;
+  .action-stripe {
+    padding: clamp(1.5rem, 3.5vw, 2.25rem) var(--home-pad-x);
   }
 
-  .expertise-actions li::before {
-    color: var(--brand-blue-sky);
-    content: "·";
-    left: 0;
-    position: absolute;
+  .action-stripe p {
+    font-family: var(--font-brand-display);
+    font-size: clamp(1.05rem, 2.2vw, 1.5rem);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    line-height: 1.3;
+    margin: 0 auto;
+    max-width: min(var(--home-max-wide), 100%);
+    text-transform: uppercase;
+  }
+
+  .action-stripe--pink {
+    background: var(--brand-pink);
+    color: var(--brand-white);
+  }
+
+  .action-stripe--blue {
+    background: var(--brand-blue);
+    color: var(--brand-white);
+  }
+
+  .action-stripe--teal {
+    background: var(--brand-teal);
+    color: var(--brand-navy);
+  }
+
+  .action-stripe--yellow {
+    background: var(--brand-yellow);
+    color: var(--brand-navy);
+  }
+
+  .action-stripe--sky {
+    background: var(--brand-blue-sky);
+    color: var(--brand-white);
   }
 
   /* ── About section overrides (after base typography) ─ */
@@ -835,6 +880,20 @@
 
   .stack-slab--about strong {
     color: var(--brand-navy);
+  }
+
+  /* On mobile the columns stack, which puts the two pull quotes back to
+     back. Push the hero quote to the end of the section instead. */
+  @media (width <= 767px) {
+    .slab-two-col--about .slab-col:last-child {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .slab-two-col--about .pull-quote--hero {
+      order: 1;
+      margin: 1.5rem 0 0;
+    }
   }
 
   /* ── Expertise grid ─ */
@@ -884,6 +943,65 @@
     content: "·";
     left: 0;
     position: absolute;
+  }
+
+  /* ── Expertise clusters: mobile cards with tag chips ─
+     On phones the four skill clusters become accent-coloured cards with
+     their skills as tag chips instead of a long bulleted wall of text. */
+
+  @media (width <= 640px) {
+    .expertise-grid {
+      gap: 0.85rem;
+    }
+
+    .expertise-cluster {
+      --cluster-accent: var(--brand-blue-sky);
+
+      background: rgba(255, 255, 255, 0.025);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-left: 3px solid var(--cluster-accent);
+      border-radius: 0.5rem;
+      padding: 1rem 1.1rem 1.1rem;
+    }
+
+    .expertise-cluster:nth-child(2) {
+      --cluster-accent: var(--brand-teal);
+    }
+
+    .expertise-cluster:nth-child(3) {
+      --cluster-accent: var(--brand-monogram-gold);
+    }
+
+    .expertise-cluster:nth-child(4) {
+      --cluster-accent: var(--brand-pink);
+    }
+
+    .expertise-cluster h4 {
+      color: var(--cluster-accent);
+      margin-bottom: 0.85rem;
+    }
+
+    .expertise-cluster ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .expertise-cluster li {
+      background: color-mix(in srgb, var(--cluster-accent) 8%, transparent);
+      border: 1px solid
+        color-mix(in srgb, var(--cluster-accent) 32%, transparent);
+      border-radius: 999px;
+      color: rgba(237, 237, 239, 0.92);
+      font-size: 0.75rem;
+      line-height: 1.3;
+      margin: 0;
+      padding: 0.32rem 0.7rem;
+    }
+
+    .expertise-cluster li::before {
+      content: none;
+    }
   }
 
   /* ── Expertise ticker ─ */
