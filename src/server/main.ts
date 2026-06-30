@@ -2,9 +2,7 @@ import { apiRoutes } from "./routes/api";
 import { appRoutes } from "./routes/app";
 import { handleAssetRequest, initAssets } from "./services/assets";
 import { log } from "./services/logger";
-import { seedStarterProjectsIfEmpty } from "./services/project";
 
-seedStarterProjectsIfEmpty();
 await initAssets();
 
 const server = Bun.serve({

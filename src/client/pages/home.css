@@ -87,6 +87,14 @@
   .stack-slab--contact .stack-slab__inner {
     margin-left: 0;
     margin-right: auto;
+
+    @media (width <= 640px) {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      min-height: inherit;
+      padding-bottom: 1.5rem;
+    }
   }
 
   .slab-two-col {
@@ -323,6 +331,7 @@
   .who-stripes {
     list-style: none;
     margin: 0;
+    overflow-x: clip;
     padding: 0;
   }
 
@@ -372,6 +381,7 @@
     flex-direction: column;
     justify-content: center;
     min-height: 0;
+    overflow-x: clip;
     position: relative;
   }
 
@@ -487,6 +497,11 @@
     padding: 2rem 0;
     text-transform: uppercase;
     white-space: nowrap;
+
+    @media (width <= 640px) {
+      flex-wrap: wrap;
+      white-space: normal;
+    }
   }
 
   .track-slide--dark .track-slide__timeline {
@@ -502,6 +517,11 @@
     flex: 1;
     height: 1px;
     opacity: 0.5;
+
+    @media (width <= 640px) {
+      flex-basis: 100%;
+      order: 2;
+    }
   }
 
   /* ── Expertise ─ */
@@ -528,6 +548,7 @@
 
     @media (width <= 640px) {
       aspect-ratio: auto;
+      min-height: 32rem;
     }
   }
 
@@ -551,6 +572,13 @@
     transform-origin: center top;
     width: 100%;
     z-index: 0;
+
+    @media (width <= 640px) {
+      background-size: cover;
+      background-position: center 20%;
+      clip-path: none;
+      height: 45%;
+    }
   }
 
   /* ── Hero typography ─ */
@@ -963,6 +991,10 @@
     border-radius: 0 0.25rem 0.25rem 0;
     max-width: 40rem;
     padding: 1.25rem 1.5rem 1.5rem 1.15rem;
+
+    @media (width <= 640px) {
+      max-width: none;
+    }
   }
 
   .contact-panel .slab-title {
