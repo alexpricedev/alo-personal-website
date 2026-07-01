@@ -2,17 +2,14 @@
   align-items: center;
   display: flex;
   flex: 1;
+  gap: 1rem;
   justify-content: flex-end;
   margin-left: 1rem;
   min-width: 0;
 
-  .nav-menu {
-    align-items: center;
-    display: flex;
-    flex: 1;
-    gap: 1rem;
-    justify-content: flex-end;
-    min-width: 0;
+  @media (width <= 640px) {
+    margin-left: 0.5rem;
+    gap: 0.5rem;
   }
 
   ul {
@@ -26,12 +23,28 @@
     margin: 0;
     padding: 0;
 
+    @media (width <= 640px) {
+      gap: 0.5rem;
+    }
+
+    @media (width <= 768px) {
+      flex-direction: column;
+      gap: 0.5rem;
+      width: 100%;
+    }
+
     a {
       color: var(--color-text-secondary);
       font-size: 14px;
       font-weight: 500;
       text-decoration: none;
       transition: color 150ms ease;
+
+      @media (width <= 768px) {
+        display: block;
+        font-size: 1.25rem;
+        padding: 0.75rem 0;
+      }
 
       &:hover,
       &:focus {
@@ -62,6 +75,12 @@
       color 150ms ease,
       border-color 150ms ease;
 
+    @media (width <= 768px) {
+      align-self: flex-start;
+      font-size: 1rem;
+      padding: 0.75rem 1.5rem;
+    }
+
     &:hover,
     &:focus {
       background: var(--color-surface);
@@ -71,98 +90,73 @@
     }
   }
 
-  /* Hamburger toggle — hidden until the mobile breakpoint. */
-  .nav-toggle {
-    align-items: center;
-    background: transparent;
-    border: 1px solid var(--color-border);
-    border-radius: 10px;
-    cursor: pointer;
-    display: none;
-    height: 42px;
-    justify-content: center;
-    padding: 0;
-    width: 42px;
-    z-index: 110;
+  .nav-menu {
+    display: contents;
+
+    @media (width <= 768px) {
+      background: var(--color-bg);
+      bottom: 0;
+      display: none;
+      flex-direction: column;
+      gap: 1.5rem;
+      height: 100dvh;
+      left: 0;
+      padding: 5.5rem 1.5rem 2rem;
+      position: fixed;
+      right: 0;
+      top: 0;
+      z-index: 90;
+
+      &[data-open] {
+        display: flex;
+      }
+    }
   }
 
-  .nav-toggle__box {
-    display: flex;
+  .nav-toggle {
+    align-items: center;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    display: none;
     flex-direction: column;
-    gap: 4px;
-    width: 18px;
+    gap: 5px;
+    height: 44px;
+    justify-content: center;
+    padding: 0;
+    width: 44px;
+
+    @media (width <= 768px) {
+      display: flex;
+    }
+
+    &[aria-expanded="true"] .nav-toggle__bar:nth-child(1) {
+      @media (width <= 768px) {
+        transform: translateY(7px) rotate(45deg);
+      }
+    }
+
+    &[aria-expanded="true"] .nav-toggle__bar:nth-child(2) {
+      @media (width <= 768px) {
+        opacity: 0;
+      }
+    }
+
+    &[aria-expanded="true"] .nav-toggle__bar:nth-child(3) {
+      @media (width <= 768px) {
+        transform: translateY(-7px) rotate(-45deg);
+      }
+    }
   }
 
   .nav-toggle__bar {
     background: var(--color-text);
     border-radius: 2px;
+    display: block;
     height: 2px;
     transition:
-      transform 200ms ease,
-      opacity 150ms ease;
-    width: 100%;
-  }
-
-  @media (width <= 768px) {
-    margin-left: 0;
-
-    .nav-toggle {
-      display: flex;
-    }
-
-    .nav-menu {
-      background: var(--color-bg);
-      border-bottom: 1px solid var(--color-border);
-      display: none;
-      flex-direction: column;
-      gap: 0;
-      inset: 100% 0 auto 0;
-      padding: 0.5rem 1.5rem 1.25rem;
-      position: absolute;
-      z-index: 105;
-    }
-
-    .nav-menu[data-open="true"] {
-      display: flex;
-    }
-
-    ul {
-      align-items: stretch;
-      flex-direction: column;
-      flex-wrap: nowrap;
-      gap: 0;
-      width: 100%;
-
-      li {
-        border-bottom: 1px solid var(--color-border);
-      }
-
-      a {
-        display: block;
-        font-size: 1rem;
-        padding: 0.9rem 0;
-      }
-    }
-
-    .nav-contact {
-      margin-top: 1rem;
-      padding: 0.75rem 14px;
-      text-align: center;
-    }
-  }
-}
-
-/* Animate the bars into an X when the menu is open. */
-[data-component="nav"] .nav-toggle[aria-expanded="true"] {
-  .nav-toggle__bar:nth-child(1) {
-    transform: translateY(6px) rotate(45deg);
-  }
-
-  .nav-toggle__bar:nth-child(2) {
-    opacity: 0;
-  }
-
-  .nav-toggle__bar:nth-child(3) {
-    transform: translateY(-6px) rotate(-45deg);
+      transform 0.2s ease,
+      opacity 0.2s ease;
+    width: 22px;
   }
 }

@@ -82,12 +82,10 @@ export function Layout({ title, name, children }: LayoutProps) {
       </head>
       <body data-page={name} data-component="layout">
         <header>
-          {name !== "home" && (
-            <a href="/" className="logo">
-              <Logo />
-              <span>Annette Lyn O&apos;Neil</span>
-            </a>
-          )}
+          <a href="/" className="logo">
+            <Logo />
+            <span>Annette Lyn O&apos;Neil</span>
+          </a>
           <Nav />
         </header>
         <main>{children}</main>

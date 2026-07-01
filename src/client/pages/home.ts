@@ -22,7 +22,8 @@ export function init() {
   const left = document.querySelector(".hero-name-split-left");
   const right = document.querySelector(".hero-name-split-right");
 
-  if (hero && left && right) {
+  const enableHeroParallax = window.matchMedia("(width >= 768px)").matches;
+  if (hero && left && right && enableHeroParallax) {
     gsap.to(left, {
       ease: "none",
       scrollTrigger: {

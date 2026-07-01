@@ -10,17 +10,15 @@ export const Nav = () => (
     <button
       type="button"
       className="nav-toggle"
-      aria-label="Open menu"
       aria-expanded="false"
       aria-controls="nav-menu"
+      aria-label="Menu"
     >
-      <span className="nav-toggle__box" aria-hidden="true">
-        <span className="nav-toggle__bar" />
-        <span className="nav-toggle__bar" />
-        <span className="nav-toggle__bar" />
-      </span>
+      <span className="nav-toggle__bar" aria-hidden="true" />
+      <span className="nav-toggle__bar" aria-hidden="true" />
+      <span className="nav-toggle__bar" aria-hidden="true" />
     </button>
-    <div className="nav-menu" id="nav-menu">
+    <div id="nav-menu" className="nav-menu">
       <ul>
         {sectionLinks.map(({ href, label }) => (
           <li key={href}>

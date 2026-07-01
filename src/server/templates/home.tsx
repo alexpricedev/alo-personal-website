@@ -240,7 +240,7 @@ export const Home = () => (
               </div>
             </div>
             <footer className="track-slide__timeline">
-              <span>Sheffield / 2023–2025</span>
+              <span>Brighton / 2023–2025</span>
               <span className="track-slide__timeline-bar" aria-hidden="true" />
             </footer>
           </div>
@@ -311,7 +311,7 @@ export const Home = () => (
               </div>
             </div>
             <footer className="track-slide__timeline">
-              <span>Sheffield / 2018–2023 (5 years)</span>
+              <span>San Francisco / Remote / 2018–2023 (5 years)</span>
               <span className="track-slide__timeline-bar" aria-hidden="true" />
             </footer>
           </div>

@@ -1,28 +1,47 @@
-export function init() {
+export function initNav(): void {
   const toggle = document.querySelector<HTMLButtonElement>(".nav-toggle");
-  const menu = document.querySelector<HTMLElement>(".nav-menu");
-
+  const menu = document.getElementById("nav-menu");
   if (!toggle || !menu) {
     return;
   }
 
-  const setOpen = (open: boolean) => {
-    toggle.setAttribute("aria-expanded", String(open));
-    toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
-    menu.dataset.open = String(open);
+  const isOpen = (): boolean => toggle.getAttribute("aria-expanded") === "true";
+
+  const open = (): void => {
+    toggle.setAttribute("aria-expanded", "true");
+    menu.dataset.open = "true";
   };
 
-  toggle.addEventListener("click", () => {
-    setOpen(toggle.getAttribute("aria-expanded") !== "true");
+  const close = (): void => {
+    toggle.setAttribute("aria-expanded", "false");
+    delete menu.dataset.open;
+  };
+
+  toggle.addEventListener("click", (event) => {
+    event.stopPropagation();
+    isOpen() ? close() : open();
   });
 
-  for (const link of menu.querySelectorAll("a")) {
-    link.addEventListener("click", () => setOpen(false));
-  }
+  menu.addEventListener("click", (event) => {
+    if ((event.target as HTMLElement).closest("a")) {
+      close();
+    }
+  });
 
   document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") {
-      setOpen(false);
+    if (event.key === "Escape" && isOpen()) {
+      close();
+      toggle.focus();
+    }
+  });
+
+  document.addEventListener("click", (event) => {
+    if (!isOpen()) {
+      return;
+    }
+    const target = event.target as Node;
+    if (!menu.contains(target) && !toggle.contains(target)) {
+      close();
     }
   });
 }

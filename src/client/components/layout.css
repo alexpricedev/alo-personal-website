@@ -8,6 +8,12 @@
     padding: 0.75rem 2rem;
     position: relative;
 
+    @media (width <= 768px) {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
     @media (width <= 640px) {
       padding: 0.75rem 1rem;
     }
@@ -84,6 +90,18 @@
     position: sticky;
     top: 0;
     z-index: 100;
+
+    @media (width <= 768px) {
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: none;
+
+      @media (width <= 768px) {
+        display: flex;
+      }
+    }
 
     .logo span {
       color: var(--brand-white);
