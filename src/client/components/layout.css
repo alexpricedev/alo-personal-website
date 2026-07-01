@@ -6,6 +6,7 @@
     display: flex;
     justify-content: space-between;
     padding: 0.75rem 2rem;
+    position: relative;
 
     @media (width <= 768px) {
       position: sticky;
@@ -92,23 +93,6 @@
 
     @media (width <= 768px) {
       justify-content: space-between;
-    }
-
-    .logo {
-      display: none;
-
-      @media (width <= 768px) {
-        display: flex;
-      }
-    }
-
-    .logo span {
-      color: var(--brand-white);
-      font-family: var(--font-brand-display, system-ui);
-      font-size: 0.9375rem;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
     }
 
     [data-component="nav"] ul a {

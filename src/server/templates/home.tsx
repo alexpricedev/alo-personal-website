@@ -74,11 +74,16 @@ export const Home = () => (
               <p className="pov-lead">
                 Founders are often strongest at selling the future before
                 they&apos;ve built the machine that can reach it. That&apos;s
-                normal. But after the raise, the work changes. Product needs
-                structure. Decisions need criteria. Signals need to be separated
-                from noise. I come in at that hinge point: helping teams turn
-                momentum into something <strong>real</strong>,{" "}
-                <strong>testable</strong>, and <strong>investable</strong>.
+                normal. But after the raise, the work changes.{" "}
+                <strong>
+                  Product needs structure. Decisions need criteria. Signals need
+                  to be separated from noise.
+                </strong>
+              </p>
+              <p className="pov-lead">
+                I come in at that hinge point: helping teams turn momentum into
+                something <strong>real</strong>, <strong>testable</strong>, and{" "}
+                <strong>investable</strong>.
               </p>
               <blockquote className="pull-quote">
                 If you&apos;re looking for a decorative advisor, you&apos;re{" "}
@@ -160,6 +165,50 @@ export const Home = () => (
       </section>
 
       <div className="track-slides" id="track-record">
+        <section className="track-slide track-slide--light">
+          <div className="track-slide__inner">
+            <div className="track-slide__content">
+              <h3 className="track-slide__role reveal-left">
+                CEO /
+                <br />
+                CPO
+              </h3>
+              <div className="track-slide__detail reveal-right">
+                <p className="track-slide__company">ထCHPTRS</p>
+                <ul className="track-slide__outcomes">
+                  <li>
+                    Co-founded and lead a fractional product-and-engineering
+                    partnership that helps founders turn ideas into validated,
+                    shippable products
+                  </li>
+                  <li>
+                    Set product vision and the operating model across explore,
+                    build, and scale—running rapid experiments to validate
+                    before committing to a full build
+                  </li>
+                  <li>
+                    Work AI-natively with multi-agent workflows to deliver
+                    senior-level product and delivery at the pace of a much
+                    larger team
+                  </li>
+                  <li>
+                    Stay accountable to client outcomes and clean handover—full
+                    IP and code ownership, zero lock-in
+                  </li>
+                </ul>
+                <p className="track-slide__proves">
+                  I can build and lead a product company end to end, pairing
+                  senior product judgment with modern AI-native execution.
+                </p>
+              </div>
+            </div>
+            <footer className="track-slide__timeline">
+              <span>Sheffield / 2025–2026+</span>
+              <span className="track-slide__timeline-bar" aria-hidden="true" />
+            </footer>
+          </div>
+        </section>
+
         <section className="track-slide track-slide--dark">
           <div className="track-slide__inner">
             <div className="track-slide__content">
@@ -309,80 +358,91 @@ export const Home = () => (
       </div>
 
       <section className="stack-slab stack-slab--expertise" id="expertise">
-        <div className="stack-slab__inner stack-slab__inner--wide">
-          <h2 className="slab-title slab-span-full reveal">What I do</h2>
-          <div className="slab-two-col slab-two-col--expertise">
-            <div className="slab-col reveal">
-              <p className="expertise-lead text-secondary">
-                I help developing teams become more than the sum of their
-                operational parts.
-              </p>
-              <ul className="expertise-actions bullet-list">
-                <li>
-                  turn a loose vision into a coherent, shippable, navigable
-                  roadmap
-                </li>
-                <li>
-                  install product science and operating discipline across
-                  prioritisation, specs, metrics, and feedback loops
-                </li>
-                <li>
-                  identify where traction problems are product problems,
-                  positioning problems, or operating problems
-                </li>
-                <li>
-                  build the internal clarity investors, teams, and founders need
-                  to keep moving
-                </li>
-                <li>create stronger decision-making under uncertainty</li>
-              </ul>
-              <blockquote className="pull-quote pull-quote--tight">
-                I don&apos;t just add hands. I add leverage.
-              </blockquote>
-            </div>
-            <div className="slab-col reveal">
-              <h3 className="slab-subtitle slab-subtitle--flush">Expertise</h3>
-              <div className="expertise-grid">
-                <div className="expertise-cluster">
-                  <h4>Product direction</h4>
-                  <ul>
-                    <li>Product strategy</li>
-                    <li>Roadmapping</li>
-                    <li>Prioritisation</li>
-                    <li>Product discovery</li>
-                    <li>PMF signal development</li>
-                  </ul>
-                </div>
-                <div className="expertise-cluster">
-                  <h4>Operating system</h4>
-                  <ul>
-                    <li>Product specs</li>
-                    <li>Feedback loops</li>
-                    <li>Metrics and dashboards</li>
-                    <li>Cross-functional rituals</li>
-                    <li>Team alignment</li>
-                  </ul>
-                </div>
-                <div className="expertise-cluster">
-                  <h4>Founder support</h4>
-                  <ul>
-                    <li>Founder advisory</li>
-                    <li>Early-stage decision support</li>
-                    <li>Org clarity</li>
-                    <li>Product audits</li>
-                    <li>Pre-raise product maturity</li>
-                  </ul>
-                </div>
-                <div className="expertise-cluster">
-                  <h4>Narrative and signal</h4>
-                  <ul>
-                    <li>Messaging clarity</li>
-                    <li>Information architecture</li>
-                    <li>Copy strategy</li>
-                    <li>User research synthesis</li>
-                    <li>Decision communication</li>
-                  </ul>
-                </div>
+        <div className="stack-slab__inner stack-slab__inner--wide expertise-intro">
+          <h2 className="slab-title reveal">What I do</h2>
+          <p className="expertise-lead text-secondary reveal">
+            I help developing teams become more than the sum of their
+            operational parts.
+          </p>
+        </div>
+
+        <ul className="action-stripes">
+          <li className="action-stripe action-stripe--pink reveal-left">
+            <p>
+              turn a loose vision into a coherent, shippable, navigable roadmap
+            </p>
+          </li>
+          <li className="action-stripe action-stripe--blue reveal-right">
+            <p>
+              install product science and operating discipline across
+              prioritisation, specs, metrics, and feedback loops
+            </p>
+          </li>
+          <li className="action-stripe action-stripe--teal reveal-left">
+            <p>
+              identify where traction problems are product problems, positioning
+              problems, or operating problems
+            </p>
+          </li>
+          <li className="action-stripe action-stripe--yellow reveal-right">
+            <p>
+              build the internal clarity investors, teams, and founders need to
+              keep moving
+            </p>
+          </li>
+          <li className="action-stripe action-stripe--sky reveal-left">
+            <p>create stronger decision-making under uncertainty</p>
+          </li>
+        </ul>
+
+        <div className="stack-slab__inner stack-slab__inner--wide expertise-detail">
+          <blockquote className="pull-quote pull-quote--tight reveal">
+            I don&apos;t just add hands. I add leverage.
+          </blockquote>
+          <h3 className="slab-subtitle slab-subtitle--spaced reveal">
+            Expertise
+          </h3>
+          <div className="slab-col reveal">
+            <div className="expertise-grid">
+              <div className="expertise-cluster">
+                <h4>Product direction</h4>
+                <ul>
+                  <li>Product strategy</li>
+                  <li>Roadmapping</li>
+                  <li>Prioritisation</li>
+                  <li>Product discovery</li>
+                  <li>PMF signal development</li>
+                </ul>
+              </div>
+              <div className="expertise-cluster">
+                <h4>Operating system</h4>
+                <ul>
+                  <li>Product specs</li>
+                  <li>Feedback loops</li>
+                  <li>Metrics and dashboards</li>
+                  <li>Cross-functional rituals</li>
+                  <li>Team alignment</li>
+                </ul>
+              </div>
+              <div className="expertise-cluster">
+                <h4>Founder support</h4>
+                <ul>
+                  <li>Founder advisory</li>
+                  <li>Early-stage decision support</li>
+                  <li>Org clarity</li>
+                  <li>Product audits</li>
+                  <li>Pre-raise product maturity</li>
+                </ul>
+              </div>
+              <div className="expertise-cluster">
+                <h4>Narrative and signal</h4>
+                <ul>
+                  <li>Messaging clarity</li>
+                  <li>Information architecture</li>
+                  <li>Copy strategy</li>
+                  <li>User research synthesis</li>
+                  <li>Decision communication</li>
+                </ul>
               </div>
             </div>
           </div>

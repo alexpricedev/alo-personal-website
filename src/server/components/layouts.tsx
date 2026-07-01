@@ -48,6 +48,8 @@ export function Layout({ title, name, children }: LayoutProps) {
         />
         <link rel="canonical" href={SITE_URL} />
         <link rel="icon" href="/favicon.png" type="image/png" />
+        <link rel="apple-touch-icon" href="/favicon.png" />
+        <meta name="apple-mobile-web-app-title" content="ALO" />
         {GA_MEASUREMENT_ID ? (
           <>
             <script
@@ -80,10 +82,12 @@ export function Layout({ title, name, children }: LayoutProps) {
       </head>
       <body data-page={name} data-component="layout">
         <header>
-          <a href="/" className="logo">
-            <Logo />
-            <span>Annette Lyn O&apos;Neil</span>
-          </a>
+          {name !== "home" && (
+            <a href="/" className="logo">
+              <Logo />
+              <span>Annette Lyn O&apos;Neil</span>
+            </a>
+          )}
           <Nav />
         </header>
         <main>{children}</main>
