@@ -16,12 +16,22 @@ function mountNav(): void {
 const toggle = () => document.querySelector(".nav-toggle") as HTMLButtonElement;
 const menu = () => document.getElementById("nav-menu") as HTMLElement;
 
+// Anchor clicks would otherwise navigate the shared happy-dom window
+// (mutating window.location and leaking into other test files).
+const preventAnchorNav = (event: Event): void => {
+  if ((event.target as HTMLElement).closest("a")) {
+    event.preventDefault();
+  }
+};
+
 describe("initNav", () => {
   beforeEach(() => {
     mountNav();
+    document.addEventListener("click", preventAnchorNav, true);
   });
 
   afterEach(() => {
+    document.removeEventListener("click", preventAnchorNav, true);
     document.body.innerHTML = "";
   });
 
