@@ -1,7 +1,6 @@
 import type React from "react";
 
 import { getAssetUrl } from "../services/assets";
-import { Logo } from "./logo";
 import { Nav } from "./nav";
 
 const SITE_URL = "https://www.annettelynoneil.com";
@@ -84,7 +83,6 @@ export function Layout({ title, name, children }: LayoutProps) {
         <header>
           {name !== "home" && (
             <a href="/" className="logo">
-              <Logo />
               <span>Annette Lyn O&apos;Neil</span>
             </a>
           )}
