@@ -129,10 +129,6 @@
     margin-bottom: 1.5rem;
   }
 
-  .slab-subtitle--flush {
-    margin-top: 0;
-  }
-
   .bullet-list--two-col {
     margin-top: 0;
 
@@ -339,6 +335,12 @@
     padding: clamp(1.75rem, 4vw, 2.5rem) var(--home-pad-x);
   }
 
+  /* Overlap adjacent stripes by 1px so the reveal animation's compositing
+     layers never leave a hairline gap (dark seam) between colours. */
+  .who-stripe + .who-stripe {
+    margin-top: -1px;
+  }
+
   .who-stripe p {
     font-family: var(--font-brand-display);
     font-size: clamp(1.1rem, 2.4vw, 1.65rem);
@@ -459,6 +461,72 @@
 
   .track-slide--light .track-slide__company {
     color: var(--brand-blue);
+  }
+
+  /* ── Business-name links: an underline that wipes in + a nudging arrow ─ */
+
+  .company-link {
+    color: inherit;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35em;
+    padding-bottom: 0.1em;
+    position: relative;
+    text-decoration: none;
+    transition:
+      opacity 0.2s ease,
+      transform 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .company-link::after {
+    background: currentcolor;
+    bottom: 0;
+    content: "";
+    height: 2px;
+    left: 0;
+    position: absolute;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.4s cubic-bezier(0.7, 0, 0.2, 1);
+    width: 100%;
+  }
+
+  .company-link:hover::after,
+  .company-link:focus-visible::after {
+    transform: scaleX(1);
+  }
+
+  .company-link__arrow {
+    font-size: 0.8em;
+    transition: transform 0.3s cubic-bezier(0.7, 0, 0.2, 1);
+  }
+
+  .company-link:hover .company-link__arrow,
+  .company-link:focus-visible .company-link__arrow {
+    transform: translate(0.2em, -0.2em);
+  }
+
+  .company-link--internal:hover .company-link__arrow,
+  .company-link--internal:focus-visible .company-link__arrow {
+    transform: translateX(0.25em);
+  }
+
+  /* Tap feedback: a quick press-in + accent flash. */
+  .company-link:active {
+    opacity: 0.85;
+    transform: scale(0.97);
+  }
+
+  @media (hover: none) {
+    .company-link::after {
+      transform: scaleX(1);
+      opacity: 0.35;
+    }
+
+    .company-link:active::after {
+      opacity: 1;
+    }
   }
 
   .track-slide__outcomes {
@@ -731,19 +799,6 @@
     font-size: clamp(2.25rem, 6vw, 3.75rem);
   }
 
-  .slab-subtitle {
-    color: var(--brand-blue-sky);
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.16em;
-    margin: 2.5rem 0 0.75rem;
-    text-transform: uppercase;
-  }
-
-  .slab-subtitle--spaced {
-    margin-top: 3rem;
-  }
-
   .pov-lead {
     color: var(--color-text-secondary);
     font-size: 1.0625rem;
@@ -765,12 +820,6 @@
   .pull-quote--hero {
     font-style: italic;
     margin: 0 0 2rem;
-  }
-
-  .pull-quote--tight {
-    font-style: italic;
-    font-weight: 500;
-    margin: 2rem 0 0;
   }
 
   .pull-quote-inline {
@@ -828,6 +877,10 @@
 
   .action-stripe {
     padding: clamp(1.5rem, 3.5vw, 2.25rem) var(--home-pad-x);
+  }
+
+  .action-stripe + .action-stripe {
+    margin-top: -1px;
   }
 
   .action-stripe p {
@@ -890,10 +943,6 @@
 
   .stack-slab--about .text-secondary {
     color: rgba(2, 35, 64, 0.72);
-  }
-
-  .stack-slab--about .slab-subtitle {
-    color: var(--brand-blue);
   }
 
   .stack-slab--about .pull-quote {
@@ -1118,20 +1167,6 @@
   .contact-panel .slab-title {
     margin: 0 0 1rem;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
-  }
-
-  .contact-lead {
-    font-size: 1.0625rem;
-    line-height: 1.65;
-    margin: 0 0 1.75rem;
-    max-width: 38rem;
-    text-shadow: 0 2px 24px rgba(2, 35, 64, 0.65);
-  }
-
-  .contact-panel .contact-lead {
-    color: rgba(237, 237, 239, 0.94);
-    margin: 0 0 1.35rem;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.28);
   }
 
   .contact-icons {

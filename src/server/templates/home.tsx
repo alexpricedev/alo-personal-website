@@ -174,7 +174,19 @@ export const Home = () => (
                 CPO
               </h3>
               <div className="track-slide__detail reveal-right">
-                <p className="track-slide__company">ထCHPTRS</p>
+                <p className="track-slide__company">
+                  <a
+                    className="company-link"
+                    href="https://chptrs.tech/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    ထCHPTRS
+                    <span className="company-link__arrow" aria-hidden="true">
+                      ↗
+                    </span>
+                  </a>
+                </p>
                 <ul className="track-slide__outcomes">
                   <li>
                     Co-founded and lead a fractional product-and-engineering
@@ -218,7 +230,19 @@ export const Home = () => (
                 Product
               </h3>
               <div className="track-slide__detail reveal-right">
-                <p className="track-slide__company">Just</p>
+                <p className="track-slide__company">
+                  <a
+                    className="company-link"
+                    href="https://justabout.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Just
+                    <span className="company-link__arrow" aria-hidden="true">
+                      ↗
+                    </span>
+                  </a>
+                </p>
                 <ul className="track-slide__outcomes">
                   <li>
                     Defined and refined product vision and roadmap across user,
@@ -255,7 +279,19 @@ export const Home = () => (
                 Lead
               </h3>
               <div className="track-slide__detail reveal-right">
-                <p className="track-slide__company">Ecologi</p>
+                <p className="track-slide__company">
+                  <a
+                    className="company-link"
+                    href="https://ecologi.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Ecologi
+                    <span className="company-link__arrow" aria-hidden="true">
+                      ↗
+                    </span>
+                  </a>
+                </p>
                 <ul className="track-slide__outcomes">
                   <li>
                     Introduced product principles and supported their
@@ -292,7 +328,19 @@ export const Home = () => (
                 CEO
               </h3>
               <div className="track-slide__detail reveal-right">
-                <p className="track-slide__company">Clearview</p>
+                <p className="track-slide__company">
+                  <a
+                    className="company-link"
+                    href="https://clearview.team/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Clearview
+                    <span className="company-link__arrow" aria-hidden="true">
+                      ↗
+                    </span>
+                  </a>
+                </p>
                 <ul className="track-slide__outcomes">
                   <li>Grew headcount from 3 to approximately 50</li>
                   <li>
@@ -327,7 +375,15 @@ export const Home = () => (
               </h3>
               <div className="track-slide__detail reveal-right">
                 <p className="track-slide__company">
-                  Film &amp; Commercial Production
+                  <a
+                    className="company-link company-link--internal"
+                    href="/motion-picture-producing-credits"
+                  >
+                    Film &amp; Commercial Production
+                    <span className="company-link__arrow" aria-hidden="true">
+                      →
+                    </span>
+                  </a>
                 </p>
                 <ul className="track-slide__outcomes">
                   <li>
@@ -396,12 +452,7 @@ export const Home = () => (
         </ul>
 
         <div className="stack-slab__inner stack-slab__inner--wide expertise-detail">
-          <blockquote className="pull-quote pull-quote--tight reveal">
-            I don&apos;t just add hands. I add leverage.
-          </blockquote>
-          <h3 className="slab-subtitle slab-subtitle--spaced reveal">
-            Expertise
-          </h3>
+          <h2 className="slab-title reveal">Expertise</h2>
           <div className="slab-col reveal">
             <div className="expertise-grid">
               <div className="expertise-cluster">
@@ -505,10 +556,6 @@ export const Home = () => (
         <div className="stack-slab__inner stack-slab__inner--wide contact-inner">
           <div className="contact-panel reveal">
             <h2 className="slab-title slab-title--contact">Let&apos;s talk</h2>
-            <p className="contact-lead text-secondary">
-              If you&apos;re building in the messy, risk-rich middle between
-              vision and product maturity, let&apos;s talk.
-            </p>
             <ul className="contact-icons" aria-label="Contact links">
               <li>
                 <a className="contact-icon-link" href={CONTACT_MAILTO}>
