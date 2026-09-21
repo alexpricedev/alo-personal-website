@@ -101,8 +101,8 @@ export const Home = () => (
                 both. Before product, I ran complex productions with large
                 budgets, hard deadlines, and no tolerance for confusion. Later,
                 I scaled teams, led companies, and built product functions
-                inside early-stage businesses. Today, that cross-training is the
-                point.
+                inside early-stage businesses. That unique cross-training has
+                resulted in a wickedly broad skillset of unusual strength.
               </p>
               <p className="text-secondary story-narrative">
                 My career has never followed a single-lane track. I&apos;ve led
