@@ -42,7 +42,7 @@ export function Layout({ title, name, children }: LayoutProps) {
           crossOrigin="anonymous"
         />
         <link
-          href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Rock+Salt&family=Special+Gothic+Expanded+One&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Rock+Salt&family=Special+Gothic+Expanded+One&display=swap"
           rel="stylesheet"
         />
         <link rel="canonical" href={SITE_URL} />
@@ -81,18 +81,19 @@ export function Layout({ title, name, children }: LayoutProps) {
       </head>
       <body data-page={name} data-component="layout">
         <header>
-          {name !== "home" && (
-            <a href="/" className="logo">
-              <span>Annette Lyn O&apos;Neil</span>
-            </a>
-          )}
+          <a href="/" className="logo" aria-label="Annette Lyn O'Neil — home">
+            A<span className="logo__dot">·</span>L
+            <span className="logo__dot">·</span>O
+          </a>
           <Nav />
         </header>
         <main>{children}</main>
         <footer id="site-footer">
           <span>
-            © {new Date().getFullYear()} - 🧡 SYTECH | Sheffield - Site by{" "}
-            <a href="https://chptrs.tech">ထCHPTRS</a>
+            © {new Date().getFullYear()} Annette Lyn O&apos;Neil · UK | US
+          </span>
+          <span>
+            Site by <a href="https://chptrs.tech">∞CHPTRS</a>
           </span>
         </footer>
         <script type="module" src={getAssetUrl("/assets/main.js")} />
