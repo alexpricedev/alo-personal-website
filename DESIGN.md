@@ -27,9 +27,8 @@ Source-of-truth for visual language. Colors and wordmark are extracted from the 
 | Nav labels & anchors | Reference / workbook: **About me** → `#about`, **Track record** → `#track-record`, **Expertises** → `#expertise`, **Testimonials** → `#testimonials`, **Contact** → `mailto:` + footer `#contact` |
 | Analytics | **Google Analytics 4** — set `GA_MEASUREMENT_ID` (e.g. `G-XXXXXXXXXX`) in `.env`; gtag loads from `layouts.tsx` when set |
 | Legal | **Skipped** for v1 launch |
-| Hero exit motion | Split horizontal (name parts exit left / right) |
-| Reference motion | Stacking full-bleed sections (see [nickvelten.nl](https://www.nickvelten.nl/)) — Lenis + GSAP-style scroll |
-| Footer | © `{year}` — SYTECH \| Sheffield — Site by [ထCHPTRS](https://chptrs.tech) |
+| Motion (2026 redesign) | CSS scroll-driven animations (`animation-timeline: view()`): stat cards rise in, handwritten line and pink marker underlines write on, red pen circles draw on. Static when unsupported or `prefers-reduced-motion`. Lenis smooth scroll. |
+| Footer | © `{year}` Annette Lyn O'Neil · UK \| US — Site by [∞CHPTRS](https://chptrs.tech) |
 
 `og:image` and `twitter:image` use **`/og-image.png`**. Set **`GA_MEASUREMENT_ID`** in `.env` for production analytics.
 
@@ -59,7 +58,9 @@ CSS mirrors these as `--brand-*` in `src/client/style.css`.
 
 | Role | Face | Notes |
 |------|------|--------|
-| Display / UI | **Special Gothic Expanded One** | Condensed geometric sans; headings, nav, name treatments |
+| Display / UI | **Special Gothic Expanded One** | Condensed geometric sans; headings, buttons, name treatments |
+| Body | **Geist** | Running text (replaces Montserrat in the 2026 redesign) |
+| Labels | **Geist Mono** | Section labels, nav links, years, footer |
 | Accent | **Rock Salt** | Hand-drawn; short highlights, pull quotes, “human” moments only |
 | Fallbacks | system UI stack | Until webfonts are loaded, use `var(--font-main)` |
 

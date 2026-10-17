@@ -1,8 +1,8 @@
 const sectionLinks = [
-  { href: "/#about", label: "About me" },
+  { href: "/#about", label: "How I think" },
   { href: "/#who-i-work-with", label: "Who I work with" },
   { href: "/#track-record", label: "Track record" },
-  { href: "/#expertise", label: "Expertises" },
+  { href: "/#expertise", label: "Expertise" },
 ] as const;
 
 export const Nav = () => (
@@ -27,7 +27,7 @@ export const Nav = () => (
         ))}
       </ul>
       <a className="nav-contact" href="/#contact">
-        Contact
+        Let&apos;s talk
       </a>
     </div>
   </nav>

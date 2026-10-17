@@ -9,7 +9,7 @@ describe("Home Controller", () => {
   });
 
   describe("GET /", () => {
-    test("renders personal homepage with workbook sections", async () => {
+    test("renders the redesigned homepage sections", async () => {
       const request = createBunRequest("http://localhost:3333/", {
         method: "GET",
       });
@@ -26,6 +26,11 @@ describe("Home Controller", () => {
       expect(html).toContain("hello@annettelynoneil.com");
       expect(html).toContain('id="expertise"');
       expect(html).toContain('id="contact"');
+      expect(html).toContain('id="who-i-work-with"');
+      expect(html).toContain("After the raise, the work changes.");
+      expect(html).toContain("Story first. Then systems.");
+      expect(html).toContain('href="/motion-picture-producing-credits"');
+      expect(html).toContain("https://www.linkedin.com/in/annettelynoneil");
     });
   });
 });
